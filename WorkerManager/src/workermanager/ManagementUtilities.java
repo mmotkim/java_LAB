@@ -31,11 +31,11 @@ public class ManagementUtilities {
         
     }
     
-    public static int increaseSalary(ArrayList<Worker> WorkerList){
+    public static void increaseSalary(ArrayList<Worker> WorkerList){
         
     }
     
-    public static int decreaseSalary(ArrayList<Worker> WorkerList){
+    public static void decreaseSalary(ArrayList<Worker> WorkerList){
         
     }
 }

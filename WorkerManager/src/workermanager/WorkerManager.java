@@ -30,16 +30,16 @@ public class WorkerManager {
             choice = getInput.getUserChoice(sc);
             //2.3 Loop for management utilities
             switch(choice){
-                case 1://Add Worker
+                case 1://Add Worker to the arraylist
                     ManagementUtilities.addWorker(WorkerList);
                     break;
-                case 2://Up Salary
+                case 2://Up Salary - increase a worker's salary by an user input's amount
                     ManagementUtilities.decreaseSalary(WorkerList);
                     break;
-                case 3://Down salary
+                case 3://Down salary - decrease a worker's salary by an user input's amount
                     ManagementUtilities.decreaseSalary(WorkerList);
                     break;
-                case 4://Display information salary
+                case 4://Display information salary0
                     display.displayInfo();
                     break;
             } 
