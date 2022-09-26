@@ -18,5 +18,24 @@ public class ManagementUtilities {
     
     public static void addWorker(ArrayList<Worker> WorkerList){
         
+        //get ID
+        
+        //get Name
+        
+        //get Age
+        
+        //get Salary
+        
+        //get work location
+        
+        
+    }
+    
+    public static int increaseSalary(ArrayList<Worker> WorkerList){
+        
+    }
+    
+    public static int decreaseSalary(ArrayList<Worker> WorkerList){
+        
     }
 }

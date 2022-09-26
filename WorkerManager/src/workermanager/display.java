@@ -17,4 +17,8 @@ public class display {
         System.out.println("   4. Display Information salary");
         System.out.println("   5. Exit");
     }
+
+    static void displayInfo() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
