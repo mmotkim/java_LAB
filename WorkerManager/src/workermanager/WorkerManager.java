@@ -4,6 +4,7 @@
  */
 package workermanager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -19,6 +20,7 @@ public class WorkerManager {
         //1.Declare variables and create objects
         Scanner sc = new Scanner(System.in);
         int choice;
+        ArrayList<Worker> WorkerList = new ArrayList<>();
         
         //2.Navigational code 
         do{
@@ -26,16 +28,20 @@ public class WorkerManager {
             display.displayMenu();
             //2.2 Ask and Get user's choice
             choice = getInput.getUserChoice(sc);
-            //2.3 Loop for management options
+            //2.3 Loop for management utilities
             switch(choice){
                 case 1://Add Worker
-                    
+                    ManagementUtilities.addWorker(WorkerList);
+                    break;
                 case 2://Up Salary
-                    
+                    ManagementUtilities.decreaseSalary(WorkerList);
+                    break;
                 case 3://Down salary
-                    
+                    ManagementUtilities.decreaseSalary(WorkerList);
+                    break;
                 case 4://Display information salary
-                    
+                    display.displayInfo();
+                    break;
             } 
         } while (choice < 5);
     }
