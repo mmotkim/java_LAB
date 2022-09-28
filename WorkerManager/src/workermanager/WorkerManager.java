@@ -27,7 +27,7 @@ public class WorkerManager {
             //2.1 Display menu
             display.displayMenu();
             //2.2 Ask and Get user's choice
-            choice = getInput.getUserChoice(sc);
+            choice = input.getNumber(sc, "", 1, 5);
             //2.3 Loop for management utilities
             switch(choice){
                 case 1://Add Worker to the arraylist
