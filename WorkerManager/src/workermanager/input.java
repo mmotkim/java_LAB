@@ -82,8 +82,9 @@ public class input {
                     for (char c : chars) {
                         if (Character.isDigit(c)) {
                             System.out.print("Input must not contain number! \n");
+                            continue;
                         } 
-                    } continue;
+                    } 
                     
                 } 
             } break;
