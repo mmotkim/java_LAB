@@ -40,15 +40,15 @@ public class input {
                 } 
                 
             } catch (NumberFormatException ex){
-                System.out.println("Input can't be a string! " + prompt);
+                System.out.println("Input can't be a string! ");
                 continue;
                 
             } catch (Exception OutOfRange){
-                System.out.println("Input must be in range! " + prompt);
+                System.out.println("Input must be in range! ");
                 continue;
                 
             } catch (Error Irrational){
-                System.out.println("Input must be rational! " + prompt);
+                System.out.println("Input must be rational! ");
                 continue;
                 
             } break;  
@@ -60,8 +60,7 @@ public class input {
     public static String getString(Scanner sc, String prompt, boolean excludeNumber){
         //Create objects and declare variables
         String input;
-        
-        
+      
         //User input loop, checks for validity of input
         do {
             System.out.print(prompt);
@@ -70,24 +69,26 @@ public class input {
             //Checks if user input is empty
             if (input.isEmpty()) {
                 System.out.println("\nInput can't be empty! ");
-            } else {
+            }
 
-                //Checks if string contains number
-                if (excludeNumber = false){
-                    break;
-                } else {
+            //Checks if string contains number
+            if (excludeNumber) {
+                try {
                     //converts input string to character array
                     char[] chars = input.toCharArray();
                     //Loop acceessing each character and check if there's a number
                     for (char c : chars) {
                         if (Character.isDigit(c)) {
-                            System.out.print("Input must not contain number! \n");
-                            continue;
-                        } 
-                    } 
-                    
-                } 
-            } break;
+                            throw new Exception();
+                        }
+                    }
+                } catch (Exception containNumber) {
+                    System.out.print("Input must not contain number! \n");
+                    continue;
+                }
+            }
+            
+            break;
         } while (true);
         return input;
     } 

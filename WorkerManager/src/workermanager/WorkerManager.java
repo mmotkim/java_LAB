@@ -25,7 +25,7 @@ public class WorkerManager {
         //2.Navigational code 
         do{
             //2.1 Display menu
-            display.displayMenu();
+            ManagementUtilities.displayMenu();
             //2.2 Ask and Get user's choice
             choice = input.getNumber(sc, "", 1, 5);
             //2.3 Loop for management utilities
@@ -34,13 +34,13 @@ public class WorkerManager {
                     ManagementUtilities.addWorker(WorkerList);
                     break;
                 case 2://Up Salary - increase a worker's salary by an user input's amount
-                    ManagementUtilities.decreaseSalary(WorkerList);
+                    ManagementUtilities.increaseSalary(WorkerList);
                     break;
                 case 3://Down salary - decrease a worker's salary by an user input's amount
                     ManagementUtilities.decreaseSalary(WorkerList);
                     break;
                 case 4://Display information salary0
-                    display.displayInfo();
+                    ManagementUtilities.displayAll(WorkerList);
                     break;
             } 
         } while (choice < 5);

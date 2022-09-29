@@ -12,11 +12,20 @@ import java.util.Scanner;
  * @author Mmotkim
  */
 public class ManagementUtilities {
+    
+    public static void displayMenu(){
+        System.out.println("\n======== Worker Management ========");
+        System.out.println("   1. Add Worker");
+        System.out.println("   2. Up Salary");
+        System.out.println("   3. Down Salary");
+        System.out.println("   4. Display Information salary");
+        System.out.println("   5. Exit");
+    }
 
     private static boolean checkIdExisting(int id, ArrayList<Worker> WorkerList) {
         //declare variable
         boolean isExist = false;
-
+        
         //loop accessing elements of array one by one
         for (Worker worker : WorkerList) {
             //comparing id with each existing id elements - similar to linear search
@@ -65,10 +74,87 @@ public class ManagementUtilities {
     }
     
     public static void increaseSalary(ArrayList<Worker> WorkerList){
+        Scanner sc = new Scanner(System.in);
         
+        System.out.println("------- Up/Down Salary -------");
+        
+        //Get ID
+        int id;
+        //loop to get user input's ID and checks if it exists
+        do{
+            id = input.getNumber(sc, "Enter Code: ", 1, Integer.MAX_VALUE);
+            
+            if (checkIdExisting(id, WorkerList)) {
+                System.out.println(" > Worker ID found!");
+                break;
+            } else 
+                System.out.println(" > Worker ID not found! Try again.");
+            
+        } while (true);
+        
+        
+        //Get Salary Input
+        int salaryIncrease = input.getNumber(sc, "Enter Salary: ", 0, Integer.MAX_VALUE);
+        
+        
+        //loop to find correct worker
+        for (Worker worker : WorkerList) {
+            //comparing id with each existing id elements - similar to linear search
+            if (worker.getId() == id) {
+                //add inputted salary to current worker's salary
+                worker.setSalary(worker.getSalary() + salaryIncrease);
+                System.out.println(" > Salary raised :)");
+                break;
+            }
+        }
     }
     
     public static void decreaseSalary(ArrayList<Worker> WorkerList){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("------- Up/Down Salary -------");
+
+        //Get ID
+        int id;
+        //loop to get user input's ID and checks if it exists
+        do {
+            id = input.getNumber(sc, "Enter Code: ", 1, Integer.MAX_VALUE);
+
+            if (checkIdExisting(id, WorkerList)) {
+                System.out.println(" > Worker ID found!");
+                break;
+            } else {
+                System.out.println(" > Worker ID not found! Try again.");
+            }
+
+        } while (true);
+
+        //Get Salary Input
+        int salaryIncrease = input.getNumber(sc, "Enter Salary: ", 0, Integer.MAX_VALUE);
+
+        //loop to find correct worker
+        for (Worker worker : WorkerList) {
+            //comparing id with each existing id elements - but this time perform math operations
+            if (worker.getId() == id) {
+                //subtract inputted salary from current worker's salary
+                worker.setSalary(worker.getSalary() - salaryIncrease);
+                System.out.println(" > Salary subtracted :(");
+                break;
+            }
+        }
+    }
+    
+    public static void displayAll(ArrayList<Worker> WorkerList){
+        System.out.println("---------------------Display Information Salary--------------------");
+        System.out.println("Code\tName\t\tAge\t\tSalary\t\tStatus\t\tDate");
+        
+        //loop accessing each worker element in arraylist
+        for (int i = 0; i < WorkerList.size(); i++) {
+            Worker worker = WorkerList.get(i);
+            
+            //for each worker, prints out the data in correct format
+            System.out.println("W " + worker.getId() + "\t" + worker.getName() + "\t\t" + worker.getAge() + "\t\t" + worker.getSalary() );
+        }
         
     }
 }
