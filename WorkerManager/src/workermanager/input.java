@@ -74,8 +74,10 @@ public class input {
             //Checks if string contains number
             if (excludeNumber) {
                 try {
+                    
                     //converts input string to character array
                     char[] chars = input.toCharArray();
+                    
                     //Loop acceessing each character and check if there's a number
                     for (char c : chars) {
                         if (Character.isDigit(c)) {
