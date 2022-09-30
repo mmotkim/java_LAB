@@ -71,9 +71,8 @@ public class ManagementUtilities {
         //Get work location
         String location = input.getString(sc, "Enter work location: ", false);
         
-        //Assign salary update status
+        //Assign default salary update status
         String status = "NONE";
-        
         //Assign current date to worker
         String date = LocalDate.now().format(VNTime);
         
