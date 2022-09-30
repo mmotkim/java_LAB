@@ -39,7 +39,7 @@ public class WorkerManager {
                 case 3://Down salary - decrease a worker's salary by an user input's amount
                     ManagementUtilities.decreaseSalary(WorkerList);
                     break;
-                case 4://Display information salary0
+                case 4://Display information salary
                     ManagementUtilities.displayAll(WorkerList);
                     break;
             } 

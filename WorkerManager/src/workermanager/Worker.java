@@ -15,16 +15,20 @@ public class Worker {
     private int age;
     private int salary;
     private String location;
+    private String status;
+    private String date;
 
     public Worker() {
     }
     
-    public Worker(int id, String name, int age, int salary, String location) {
+    public Worker(int id, String name, int age, int salary, String location, String status, String date) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.salary = salary;
         this.location = location;
+        this.status = status;
+        this.date = date;
     }
 
     public int getId() {
@@ -65,6 +69,22 @@ public class Worker {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
     
     
