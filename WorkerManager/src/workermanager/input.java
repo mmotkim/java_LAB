@@ -69,6 +69,7 @@ public class input {
             //Checks if user input is empty
             if (input.isEmpty()) {
                 System.out.println("\nInput can't be empty! ");
+                continue;
             }
 
             //Checks if string contains number
@@ -80,7 +81,10 @@ public class input {
                     
                     //Loop acceessing each character and check if there's a number
                     for (char c : chars) {
-                        if (Character.isDigit(c)) {
+                        if (Character.isLetter(c) || c == ' '){
+                            
+                        }
+                        else {
                             throw new Exception();
                         }
                     }

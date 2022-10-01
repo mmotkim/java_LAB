@@ -80,6 +80,8 @@ public class ManagementUtilities {
         //Create an Worker object and append all the inputs then add it to the array list
         Worker worker = new Worker(id, name, age, salary, location, status, date);
         WorkerList.add(worker);
+        
+        System.out.println(" > Worker added!");
     }
     
     public static void increaseSalary(ArrayList<Worker> WorkerList){
@@ -88,6 +90,7 @@ public class ManagementUtilities {
         DateTimeFormatter VNTime = DateTimeFormatter.ofPattern("dd/MM/YYYY ");
         
         System.out.println("------- Up/Down Salary -------");
+        
         
         //Get ID
         int id;
@@ -131,7 +134,9 @@ public class ManagementUtilities {
 
         System.out.println("------- Up/Down Salary -------");
 
+        
         //Get ID
+        
         int id;
         //loop to get user input's ID and checks if it exists
         do {
@@ -146,6 +151,7 @@ public class ManagementUtilities {
 
         } while (true);
 
+        
         //Get Salary Input
         
         int salaryIncrease = input.getNumber(sc, "Enter Salary: ", 0, Integer.MAX_VALUE);
