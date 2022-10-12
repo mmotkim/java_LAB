@@ -42,7 +42,7 @@ public class ManagerUtilities {
         //Student schedule addition Loop
         do{
             //Loop checking NUMBER of students has exceed 10 (count for unique IDs)
-            int count = 0;
+            int count = 1;
             for (Student student : studentList) { //
                 //Creates another
                 for (Student uniqueIDs : studentList) {
@@ -54,10 +54,10 @@ public class ManagerUtilities {
                 break;
             }
 
-            if (count >= 10) {
+            if (count >= 2) {
                 String choice = input.getDoubleChoice(sc, "Do you want to continue (Y/N)?", "Y", "N");
 
-                if (!choice.equals("y")) {
+                if (!choice.equals("Y")) {
                     break;
                 }
             }
@@ -104,7 +104,30 @@ public class ManagerUtilities {
     }
 
     public static void FindAndSort(ArrayList<Student> studentList) {
+        //Declare objects and variables
+        Scanner sc = new Scanner(System.in);
         
+        //Student Schedule Find & Sort Loop
+        do{
+            String searchInput = input.getString(sc, "Input student name to search: ");
+            
+            //tranverse the studentList
+            for (Student student : studentList) {
+                //checks if student name contains search input
+                if (student.getName().contains(searchInput)) {
+                    
+                    //prints found student's info
+                    System.out.println("Name \t\t Semester \t\t  Course Name");
+                    System.out.println(student.getName() + "\t\t" + student.getSemester() + "\t\t" + student.getCourseName());
+                    
+                    
+                } 
+                
+                System.out.println(" > Student not found! try again.. ");
+            } 
+            
+            break;
+        } while(true);
     }
 
     public static void UpdateOrDelete(ArrayList<Student> studentList) {
@@ -113,4 +136,9 @@ public class ManagerUtilities {
     public static void displayAll(ArrayList<Student> studentList) {
     }
 
+    //Other utility sub functions
+    public static void displayOne(ArrayList<Student> studentList){
+        Student student = new Student();
+        
+    }
 }

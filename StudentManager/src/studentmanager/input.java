@@ -81,8 +81,7 @@ public class input {
         //User Input Loop for checking appropriate input format.
         do{
             System.out.println(prompt);
-            input = sc.nextLine();
-            input.toLowerCase();
+            input = sc.nextLine().toUpperCase();
 
             //checks if user input is empty
             if (input.isEmpty()){
@@ -91,11 +90,12 @@ public class input {
             }
             
             //checks if user inputted the appropriate format
-            if (!input.equals(firstChoice) || !input.equals(secondChoice)){
+            if (input.equals(firstChoice) || input.equals(secondChoice)){
+                break;
+            } else {
                 System.out.println("Inputted choice isn't appropriate");
-                continue;
             }
-            break;
+            
         } while(true);
 
         return input;
