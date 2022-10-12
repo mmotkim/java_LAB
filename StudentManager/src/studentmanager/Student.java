@@ -1,50 +1,48 @@
 package studentmanager;
 
 public class Student {
-    private int id;
-    private String name;
+    private int stuID;
+    private String stuName;
     private int semester;
     private String courseName;
-    private int totalCourse;
 
     public Student(){
 
     }   
 
-    public Student(int id, String name, int semester, String courseName, int totalCourse){
-        this.id = id;
-        this.name = name;
+    public Student(int stuID, String stuName, int semester, String courseName){
+        this.stuID = stuID;
+        this.stuName = stuName;
         this.semester = semester;
         this.courseName = courseName;
-        this.totalCourse = totalCourse;
     }
 
     /**
      * @return int return the id
      */
-    public int getId() {
-        return id;
+    public int getStuID() {
+        return stuID;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setStuID(int stuID) {
+        this.stuID = stuID;
     }
 
     /**
      * @return String return the name
      */
     public String getName() {
-        return name;
+        return stuName;
     }
 
     /**
      * @param name the name to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String stuName) {
+        this.stuName = stuName;
     }
 
     /**
@@ -73,20 +71,6 @@ public class Student {
      */
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    /**
-     * @return int return the totalCourse
-     */
-    public int getTotalCourse() {
-        return totalCourse;
-    }
-
-    /**
-     * @param totalCourse the totalCourse to set
-     */
-    public void setTotalCourse(int totalCourse) {
-        this.totalCourse = totalCourse;
     }
 
 }

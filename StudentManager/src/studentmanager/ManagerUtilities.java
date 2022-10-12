@@ -23,7 +23,7 @@ public class ManagerUtilities {
         
         //Student schedule addition Loop
         do{
-        //Loop checking NUMBER of students has exceed 10 (count for unique IDsz)
+        //Loop checking NUMBER of students has exceed 10 (count for unique IDs)
         for(Student student : StudentList){
             if student.getStuID()
         }

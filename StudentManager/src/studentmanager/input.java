@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class input {
 
-    public static int getPositiveNumber(Scanner sc, String prompt, int min, int max) {
+    public static int getNumber(Scanner sc, String prompt, int min, int max) {
         //Declare variables and create objects
         String input;
         double number;
