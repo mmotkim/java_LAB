@@ -16,7 +16,7 @@ public class input {
 
             //checks if user input is empty
             if (input.isEmpty()){
-                System.out.println("Input can't be empty!" + prompt);
+                System.out.println("Input can't be empty!");
                 continue;
             }
 
@@ -64,7 +64,7 @@ public class input {
 
             //checks if user input is empty
             if (input.isEmpty()){
-                System.out.println("Inputted string can't be empty!" + prompt);
+                System.out.println("Inputted string can't be empty!");
                 continue;
             }
             
@@ -74,4 +74,30 @@ public class input {
         return input;
     }
 
+    public static String getDoubleChoice(Scanner sc, String prompt, String firstChoice, String secondChoice){
+         //Create objects and declare variables
+        String input;
+
+        //User Input Loop for checking appropriate input format.
+        do{
+            System.out.println(prompt);
+            input = sc.nextLine();
+            input.toLowerCase();
+
+            //checks if user input is empty
+            if (input.isEmpty()){
+                System.out.println("Inputted choice can't be empty!");
+                continue;
+            }
+            
+            //checks if user inputted the appropriate format
+            if (!input.equals(firstChoice) || !input.equals(secondChoice)){
+                System.out.println("Inputted choice isn't appropriate");
+                continue;
+            }
+            break;
+        } while(true);
+
+        return input;
+    }
 }
