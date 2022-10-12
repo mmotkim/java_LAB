@@ -41,7 +41,7 @@ public class ManagerUtilities {
         
         //Student schedule addition Loop
         do{
-            //Loop checking NUMBER of students has exceed 10 (count for unique IDs)
+            //Loop checking NUMBER of students has exceeded 10 (count for unique IDs)
             int count = 1;
             for (Student student : studentList) { //
                 //Creates another
@@ -62,6 +62,7 @@ public class ManagerUtilities {
                 }
             }
 
+            
             //User inputs ID
             //note: if ID exists, SKIP student name and semester input
             int stuID = input.getNumber(sc, "Input Student ID: ", 1, Integer.MAX_VALUE);
@@ -77,8 +78,7 @@ public class ManagerUtilities {
 
             }
 
-
-
+            
             //User inputs course name
             //note: choose course from an existing list
             int courseNumber = input.getNumber(sc, "Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
