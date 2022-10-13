@@ -86,7 +86,7 @@ public class ManagerUtilities {
                         break;
                     }
                     break;
-                }
+                }//Tranverses the studenList again and copy the student info with the same ID to the current student input 
             }
 
             
@@ -111,7 +111,7 @@ public class ManagerUtilities {
         //Declare objects and variables
         Scanner sc = new Scanner(System.in);
         
-        //Student Schedule Find & Sort Loop
+        //Student Schedule Search Loop
         do{
             String searchInput = input.getString(sc, "Input student name to search: ");
 
@@ -145,6 +145,8 @@ public class ManagerUtilities {
 
             break;
         } while(true);
+
+
     }
 
     public static void UpdateOrDelete(ArrayList<Student> studentList) {
