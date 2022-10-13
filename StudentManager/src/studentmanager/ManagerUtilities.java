@@ -11,7 +11,7 @@ public class ManagerUtilities {
         System.out.println("\t2.  Find and Sort");
         System.out.println("\t3.  Update/Delete");
         System.out.println("\t4.  Report");
-        System.out.println("\t5.  Exit");
+        System.out.print("\t5.  Exit");
     }
 
     public static boolean checkIDExisting(int stuID, ArrayList<Student> studentList){
@@ -41,12 +41,13 @@ public class ManagerUtilities {
         
         //Student schedule addition Loop
         do{
-            //Loop checking NUMBER of students has exceeded 10 (count for unique IDs)
+
+            //Loop checking NUMBER of students exceeding 10 (count for unique IDs)
             int count = 1;
-            for (Student student : studentList) { //
-                //Creates another
+            for (Student student : studentList) { //Tranverse over the studentList
+                //Creates another loop/list to compare the students' IDs
                 for (Student uniqueIDs : studentList) {
-                    //
+                    //Checks if stuIDs from the first loop is different from elements throughout the duplicated ones, 
                     if (student.getStuID() != uniqueIDs.getStuID()) {
                         count++;
                     }
@@ -76,6 +77,16 @@ public class ManagerUtilities {
                 //User inputs semester
                 semester = input.getNumber(sc, "Input Semester: ", 1, Integer.MAX_VALUE);
 
+            //Add the existing student info to student input
+            } else {
+                for (Student student : studentList){
+                    if (checkIDExisting(stuID, studentList)){
+                        stuName = student.getName();
+                        semester = student.getSemester();
+                        break;
+                    }
+                    break;
+                }
             }
 
             
@@ -84,22 +95,15 @@ public class ManagerUtilities {
             int courseNumber = input.getNumber(sc, "Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
 
             //initialize courseName from courseNumber input
-            switch (courseNumber) {
-                case 1: {
-                    courseName = "Java";
-                }
-                case 2: {
-                    courseName = ".Net";
-                }
-                case 3: {
-                    courseName = "C/C++";
-                }
-            }
+            if (courseNumber == 1) courseName = "Java";
+            else if (courseNumber == 2) courseName = ".Net";
+            else if (courseNumber == 3) courseName = "C/C++";
 
             //Create a Student object and append all the inputs then add it to the arraylist
             Student student = new Student(stuID, stuName, semester, courseName);
             studentList.add(student);
 
+            System.out.println(" > Student added :) \n");
         } while (true);
     }
 
@@ -110,22 +114,35 @@ public class ManagerUtilities {
         //Student Schedule Find & Sort Loop
         do{
             String searchInput = input.getString(sc, "Input student name to search: ");
-            
-            //tranverse the studentList
+
+            //Creates temporary student list to store the found info
+            ArrayList<Student> studentInfoList = new ArrayList<Student>();
+
+            //tranverses the studentList
             for (Student student : studentList) {
+                
                 //checks if student name contains search input
                 if (student.getName().contains(searchInput)) {
-                    
-                    //prints found student's info
-                    System.out.println("Name \t\t Semester \t\t  Course Name");
-                    System.out.println(student.getName() + "\t\t" + student.getSemester() + "\t\t" + student.getCourseName());
-                    
-                    
-                } 
-                
-                System.out.println(" > Student not found! try again.. ");
+                    //Add the newly accessed info to the arraylist studentInfo
+                    studentInfoList.add(student);
+                    continue;
+                   
+                }
             } 
-            
+
+            //checks if the search found any proper students
+            if (studentInfoList.isEmpty()){
+                System.out.println(" > Student not found! try again.");
+                break;
+            }
+
+            //when all is searched, prints out the temporary arraylist studentInfo
+            System.out.println("Name\t\tSemester\t\tCourse Name");
+
+            for(Student studentInfo : studentInfoList){
+                System.out.println(studentInfo.getName() + "\t\t" + studentInfo.getSemester() + "\t\t\t" + studentInfo.getCourseName());
+            }
+
             break;
         } while(true);
     }
