@@ -1,7 +1,7 @@
 package studentmanager;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
 
 public class ManagerUtilities {
 
@@ -13,27 +13,10 @@ public class ManagerUtilities {
         System.out.println("\t4.  Report");
         System.out.print("\t5.  Exit");
     }
-
-    public static boolean checkIDExisting(int stuID, ArrayList<Student> studentList){
-        //declare variable
-        boolean isExist = false;
-        
-        //loop accessing elements of array one by one
-        for (Student student : studentList) {
-            //comparing id with each existing id elements - similar to linear search
-            if (student.getStuID() == stuID) {
-                isExist = true;
-                break;
-            }
-        }
-        return isExist;
-    }
     
     public static void createStudent(ArrayList<Student> studentList) {
         //Declare variables and objects
-        Scanner sc = new Scanner(System.in);
         String stuName = null;
-        int semester = -1;
         String courseName = null;
 
         //note: ID CAN BE DUPLICATED
@@ -56,7 +39,7 @@ public class ManagerUtilities {
             }
 
             if (count >= 2) {
-                String choice = input.getDoubleChoice(sc, "Do you want to continue (Y/N)?", "Y", "N");
+                String choice = input.getDoubleChoice("Do you want to continue (Y/N)?", "Y", "N");
 
                 if (!choice.equals("Y")) {
                     break;
@@ -64,40 +47,48 @@ public class ManagerUtilities {
             }
 
             
-            //User inputs ID
-            //note: if ID exists, SKIP student name and semester input
-            int stuID = input.getNumber(sc, "Input Student ID: ", 1, Integer.MAX_VALUE);
+            //User inputs ID. If ID exists, SKIP student name input
+            int stuID = input.getNumber("Input Student ID: ", 1, Integer.MAX_VALUE);
 
             //Checks if inputted ID is unique. 
             if (!checkIDExisting(stuID, studentList)) {
 
                 //User inputs student name
-                stuName = input.getString(sc, "Input Student Name: ");
+                stuName = input.getString("Input Student Name: ");
 
-                //User inputs semester
-                semester = input.getNumber(sc, "Input Semester: ", 1, Integer.MAX_VALUE);
 
             //Add the existing student info to student input
             } else {
                 for (Student student : studentList){
                     if (checkIDExisting(stuID, studentList)){
                         stuName = student.getName();
-                        semester = student.getSemester();
                         break;
                     }
                     break;
                 }
             }
 
-            
+            //User inputs semester
+            int semester = input.getNumber("Input Semester: ", 1, Integer.MAX_VALUE);
+
             //User inputs course name
             //note: choose course from an existing list
-            int courseNumber = input.getNumber(sc, "Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
+            int courseNumber = input.getNumber("Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
 
             //initialize courseName from courseNumber input
-            if (courseNumber == 1) courseName = "Java";
-            else if (courseNumber == 2) courseName = ".Net";
-            else if (courseNumber == 3) courseName = "C/C++";
+            switch (courseNumber) {
+                case 1:
+                    courseName = "Java";
+                    break;
+                case 2:
+                    courseName = ".Net";
+                    break;
+                case 3:
+                    courseName = "C/C++";
+                    break;
+                default:
+                    break;
+            }
 
             //Create a Student object and append all the inputs then add it to the arraylist
             Student student = new Student(stuID, stuName, semester, courseName);
@@ -109,14 +100,14 @@ public class ManagerUtilities {
 
     public static void FindAndSort(ArrayList<Student> studentList) {
         //Declare objects and variables
-        Scanner sc = new Scanner(System.in);
         
-        //Student Schedule Find & Sort Loop
+        
+        //Student Schedule Search  & Sort Loop
         do{
-            String searchInput = input.getString(sc, "Input student name to search: ");
+            String searchInput = input.getString("Input student name to search: ");
 
             //Creates temporary student list to store the found info
-            ArrayList<Student> studentInfoList = new ArrayList<Student>();
+            ArrayList<Student> foundStudentList = new ArrayList<>();
 
             //tranverses the studentList
             for (Student student : studentList) {
@@ -124,23 +115,25 @@ public class ManagerUtilities {
                 //checks if student name contains search input
                 if (student.getName().contains(searchInput)) {
                     //Add the newly accessed info to the arraylist studentInfo
-                    studentInfoList.add(student);
-                    continue;
+                    foundStudentList.add(student);
                    
                 }
             } 
 
             //checks if the search found any proper students
-            if (studentInfoList.isEmpty()){
+            if (foundStudentList.isEmpty()){
                 System.out.println(" > Student not found! try again.");
                 break;
             }
 
+            
+            Collections.sort(foundStudentList);
+            
             //when all is searched, prints out the temporary arraylist studentInfo
             System.out.println("Name\t\tSemester\t\tCourse Name");
 
-            for(Student studentInfo : studentInfoList){
-                System.out.println(studentInfo.getName() + "\t\t" + studentInfo.getSemester() + "\t\t\t" + studentInfo.getCourseName());
+            for(Student student : foundStudentList){
+                student.displayOne();
             }
 
             break;
@@ -148,14 +141,72 @@ public class ManagerUtilities {
     }
 
     public static void UpdateOrDelete(ArrayList<Student> studentList) {
+        //Declare variables and create objects
+
+        //Student Search by ID Loop
+        do{
+            int searchID = input.getNumber("Input ID of student to update: ", 0, Integer.MAX_VALUE);
+            
+            //check if inputted ID exists
+            if (!checkIDExisting(searchID, studentList)){
+                System.out.println(" > Student not found! try again.");
+            } 
+            
+            
+            //If student ID exists:
+            else { //CASE 1: Multiple schedules from a student
+                
+                //Creates temporary student list to store the found info
+                ArrayList<Student> foundStudentList = new ArrayList<>();
+
+                //tranverses the studentList
+                for (Student student : studentList) {
+
+                    //check if inputted ID exists
+                    if (student.getStuID() == searchID) {
+                        //Add the newly accessed info to the arraylist studentInfo
+                        foundStudentList.add(student);
+                    }
+                }
+                
+                //Print out the whole schedule of that student and let user choose which to operate on
+                System.out.println(" > Here's the schedule of student ID " + searchID + ": ");
+                
+                for (Student student : foundStudentList){ //tranverse the temporary student list
+                    System.out.print(foundStudentList.indexOf(student));
+                    student.displayOne();
+                }
+                
+                int scheduleInput = input.getNumber("Choose one to perform operations on: ", 0, foundStudentList.size());
+                
+                
+                
+            }
+            
+            
+            
+            
+        } while(true);
     }
 
     public static void displayAll(ArrayList<Student> studentList) {
     }
 
     //Other utility sub functions
-    public static void displayOne(ArrayList<Student> studentList){
-        Student student = new Student();
+    
+    public static boolean checkIDExisting(int stuID, ArrayList<Student> studentList){
+        //declare variable
+        boolean isExist = false;
         
+        //loop accessing elements of array one by one
+        for (Student student : studentList) {
+            //comparing id with each existing id elements - similar to linear search
+            if (student.getStuID() == stuID) {
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
     }
+    
 }

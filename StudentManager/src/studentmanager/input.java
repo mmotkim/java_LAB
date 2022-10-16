@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class input {
 
-    public static int getNumber(Scanner sc, String prompt, int min, int max) {
+    public static int getNumber(String prompt, int min, int max) {
         //Declare variables and create objects
+        Scanner sc = new Scanner(System.in);
         String input;
         double number;
 
@@ -53,8 +54,9 @@ public class input {
         return (int)number;
     }
 
-    public static String getString(Scanner sc, String prompt){
+    public static String getString(String prompt){
         //Create objects and declare variables
+        Scanner sc = new Scanner(System.in);
         String input;
 
         //User Input Loop for checking appropriate input format.
@@ -74,8 +76,9 @@ public class input {
         return input;
     }
 
-    public static String getDoubleChoice(Scanner sc, String prompt, String firstChoice, String secondChoice){
-         //Create objects and declare variables
+    public static String getDoubleChoice(String prompt, String firstChoice, String secondChoice){
+        //Create objects and declare variables
+        Scanner sc = new Scanner(System.in);
         String input;
 
         //User Input Loop for checking appropriate input format.
