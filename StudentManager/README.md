@@ -64,3 +64,4 @@ Slot            Task                  Description
 5               Review program        Mentor reviews student’s program.
 
 
+[J1.L.P0021.docx](https://github.com/mmotkim/java_LAB/files/9801010/J1.L.P0021.docx)
