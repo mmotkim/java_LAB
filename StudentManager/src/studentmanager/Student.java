@@ -79,7 +79,7 @@ public class Student implements Comparable<Student> {
     }
 
     public void displayOne(){
-        System.out.println(stuName + "\t\t" + semester + "\t\t\t" + courseName);
+        System.out.print(stuName + "\t\t" + semester + "\t\t\t" + courseName);
     }
 
     

@@ -102,5 +102,9 @@ public class input {
         } while(true);
 
         return input;
+
+        //1     duc     java
+        //1     duc     .net    
+        //2     nam     
     }
 }
