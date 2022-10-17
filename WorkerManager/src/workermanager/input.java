@@ -11,8 +11,9 @@ import java.util.Scanner;
  * @author Mmotkim
  */
 public class input {
-    public static int getNumber(Scanner sc, String prompt, int min, int max){
+    public static int getNumber(String prompt, int min, int max){
         //Declare variables and create objects
+        Scanner sc = new Scanner(System.in);
         String input;
         double number;
         
@@ -57,8 +58,9 @@ public class input {
         return (int)number;
     }
     
-    public static String getString(Scanner sc, String prompt, boolean excludeNumber){
+    public static String getString(String prompt, boolean excludeNumber){
         //Create objects and declare variables
+        Scanner sc = new Scanner(System.in);
         String input;
       
         //User input loop, checks for validity of input

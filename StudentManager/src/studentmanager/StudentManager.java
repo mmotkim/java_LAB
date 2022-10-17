@@ -27,7 +27,7 @@ public class StudentManager {
             //2.1 Display menu
             ManagerUtilities.displayMenu();
             //2.2 Get user's choice
-            choice = input.getNumber(sc, "", 1, 5);
+            choice = input.getNumber("", 1, 5);
             //2.3 Manager utility choices loop
             switch(choice){
                 case 1: //Add Student to arraylist

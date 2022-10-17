@@ -1,7 +1,7 @@
 package studentmanager;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
 
 public class ManagerUtilities {
 
@@ -13,27 +13,10 @@ public class ManagerUtilities {
         System.out.println("\t4.  Report");
         System.out.print("\t5.  Exit");
     }
-
-    public static boolean checkIDExisting(int stuID, ArrayList<Student> studentList){
-        //declare variable
-        boolean isExist = false;
-        
-        //loop accessing elements of array one by one
-        for (Student student : studentList) {
-            //comparing id with each existing id elements - similar to linear search
-            if (student.getStuID() == stuID) {
-                isExist = true;
-                break;
-            }
-        }
-        return isExist;
-    }
     
     public static void createStudent(ArrayList<Student> studentList) {
         //Declare variables and objects
-        Scanner sc = new Scanner(System.in);
         String stuName = null;
-        int semester = -1;
         String courseName = null;
 
         //note: ID CAN BE DUPLICATED
@@ -56,7 +39,7 @@ public class ManagerUtilities {
             }
 
             if (count >= 2) {
-                String choice = input.getDoubleChoice(sc, "Do you want to continue (Y/N)?", "Y", "N");
+                String choice = input.getDoubleChoice("Do you want to continue (Y/N)?", "Y", "N");
 
                 if (!choice.equals("Y")) {
                     break;
@@ -64,18 +47,15 @@ public class ManagerUtilities {
             }
 
             
-            //User inputs ID
-            //note: if ID exists, SKIP student name and semester input
-            int stuID = input.getNumber(sc, "Input Student ID: ", 1, Integer.MAX_VALUE);
+            //User inputs ID. If ID exists, SKIP student name input
+            int stuID = input.getNumber("Input Student ID: ", 1, Integer.MAX_VALUE);
 
             //Checks if inputted ID is unique. 
             if (!checkIDExisting(stuID, studentList)) {
 
                 //User inputs student name
-                stuName = input.getString(sc, "Input Student Name: ");
+                stuName = input.getString("Input Student Name: ");
 
-                //User inputs semester
-                semester = input.getNumber(sc, "Input Semester: ", 1, Integer.MAX_VALUE);
 
             //Add the existing student info to student input
             } else {
@@ -88,10 +68,12 @@ public class ManagerUtilities {
                 }//Tranverses the studenList again and copy the student info with the same ID to the current student input 
             }
 
-            
+            //User inputs semester
+            int semester = input.getNumber("Input Semester: ", 1, Integer.MAX_VALUE);
+
             //User inputs course name
             //note: choose course from an existing list
-            int courseNumber = input.getNumber(sc, "Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
+            int courseNumber = input.getNumber("Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
 
             //initialize courseName from courseNumber input
             switch (courseNumber) {

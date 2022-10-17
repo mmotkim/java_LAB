@@ -1,5 +1,6 @@
 package studentmanager;
 
+public class Student implements Comparable<Student> {
     private int stuID;
     private String stuName;
     private int semester;
@@ -72,5 +73,16 @@ package studentmanager;
         this.courseName = courseName;
     }
 
+    @Override
+    public int compareTo(Student o) {
+        return o.stuName.compareTo(stuName);
+    }
+
+    public void displayOne(){
+        System.out.println(stuName + "\t\t" + semester + "\t\t\t" + courseName);
+    }
+
+    
+ 
 }
     
