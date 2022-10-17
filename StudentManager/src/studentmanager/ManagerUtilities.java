@@ -65,7 +65,7 @@ public class ManagerUtilities {
                         break;
                     }
                     break;
-                }
+                }//Tranverses the studenList again and copy the student info with the same ID to the current student input 
             }
 
             //User inputs semester
@@ -147,13 +147,13 @@ public class ManagerUtilities {
         do{
             int searchID = input.getNumber("Input ID of student to update: ", 0, Integer.MAX_VALUE);
             
-            //check if inputted ID exists
+            //check if inputted ID doesn't exists
             if (!checkIDExisting(searchID, studentList)){
                 System.out.println(" > Student not found! try again.");
             } 
             
             
-            //If student ID exists:
+            //If inputted student ID exists:
             else { //CASE 1: Multiple schedules from a student
                 
                 //Creates temporary student list to store the found info
@@ -177,9 +177,47 @@ public class ManagerUtilities {
                     student.displayOne();
                 }
                 
+                //Get user input on choosing schedule 
                 int scheduleInput = input.getNumber("Choose one to perform operations on: ", 0, foundStudentList.size());
-                
-                
+                //Get user input on choosing operation
+                String doubleChoice = input.getDoubleChoice("Update / Delete (type U or D)", "U", "D");
+
+                //UPDATE CASE
+                if (doubleChoice.equals("U")){
+                    Student studentUpdate = studentList.get(scheduleInput);
+
+                    //Student Update loop
+                    do{
+                        System.out.println("1. Student ID ; 2. Student Name ; 3. Schedule Semester ; 4. Schedule Course Name");
+                        int updateChoice = input.getNumber("Please choose an element to update: ", 1, 4);
+
+                        switch(updateChoice) {
+                            case 1://Change student ID (note: Change all instances of schedule)
+                                int IDUpdate = input.getNumber("Input new ID: ", 0, Integer.MAX_VALUE);
+
+                                //Checks if ID exists
+
+                            
+                            case 2:
+
+                            break;
+                            case 3:
+
+                            break;
+                            case 4:
+                            break;
+                        }
+
+
+                        //Update student ID case
+
+                    } while(true);
+                } 
+
+                //DELETE CASE
+                else if (doubleChoice.equals("D")){
+
+                } 
                 
             }
             
