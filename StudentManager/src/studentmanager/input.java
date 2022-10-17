@@ -76,9 +76,8 @@ public class input {
         return input;
     }
 
-    public static String getDoubleChoice(String prompt, String firstChoice, String secondChoice){
-        //Create objects and declare variables
-        Scanner sc = new Scanner(System.in);
+    public static String getDoubleChoice(Scanner sc, String prompt, String firstChoice, String secondChoice){
+         //Create objects and declare variables
         String input;
 
         //User Input Loop for checking appropriate input format.

@@ -19,6 +19,7 @@ public class StudentManager {
      */
     public static void main(String[] args) {
         //1. Declare variables and create objects
+        Scanner sc = new Scanner(System.in);
         ArrayList<Student> StudentList = new ArrayList<>();
         int choice;
 
