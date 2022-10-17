@@ -1,6 +1,5 @@
 package studentmanager;
 
-public class Student {
     private int stuID;
     private String stuName;
     private int semester;
