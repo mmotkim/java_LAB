@@ -65,7 +65,7 @@ public class ManagerUtilities {
                         break;
                     }
                     break;
-                }//Tranverses the studenList again and copy the student info with the same ID to the current student input 
+                }
             }
 
             //User inputs semester
@@ -101,12 +101,8 @@ public class ManagerUtilities {
     public static void FindAndSort(ArrayList<Student> studentList) {
         //Declare objects and variables
         
-<<<<<<< HEAD
-        //Student Schedule Search Loop
-=======
         
         //Student Schedule Search  & Sort Loop
->>>>>>> e1aa9ba8b694e46eee9498ec9d5d3d1fa8dc74e6
         do{
             String searchInput = input.getString("Input student name to search: ");
 
@@ -142,8 +138,6 @@ public class ManagerUtilities {
 
             break;
         } while(true);
-
-
     }
 
     public static void UpdateOrDelete(ArrayList<Student> studentList) {
