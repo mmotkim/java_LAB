@@ -2,9 +2,6 @@ package studentmanager;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 public class ManagerUtilities {
 
@@ -18,7 +15,7 @@ public class ManagerUtilities {
     }
 
     public static void createStudent(ArrayList<Student> studentList) {
-        
+
         // Declare variables and objects
         String stuName = null;
         String courseName = null;
@@ -33,7 +30,8 @@ public class ManagerUtilities {
             for (Student student : studentList) { // Tranverse over the studentList
                 // Creates another loop/list to compare the students' IDs
                 for (Student uniqueIDs : studentList) {
-                    // Checks if stuIDs from the first loop is different from elements throughout the duplicated ones,
+                    // Checks if stuIDs from the first loop is different from elements throughout
+                    // the duplicated ones,
                     if (student.getStuID() != uniqueIDs.getStuID()) {
                         count++;
                     }
@@ -72,35 +70,22 @@ public class ManagerUtilities {
             // User inputs semester
             int semester = input.getNumber("Input Semester: ", 1, Integer.MAX_VALUE);
 
-            // User inputs course name
-            // note: choose course from an existing list
-            int courseNumber = input.getNumber("Input course number (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
+            courseName = input.getCourse();
 
-            // initialize courseName from courseNumber input
-            switch (courseNumber) {
-                case 1:
-                    courseName = "Java";
-                    break;
-                case 2:
-                    courseName = ".Net";
-                    break;
-                case 3:
-                    courseName = "C/C++";
-                    break;
-                default:
-                    break;
-            }
+            // check if schedule is identical to any existing schedule
+            if (!checkDuplicate(studentList, stuID, semester, courseName)) {
 
-            // Create a Student object and append all the inputs then add it to the
-            // arraylist
-            Student student = new Student(stuID, stuName, semester, courseName);
-            studentList.add(student);
+                // Create a Student object and append all the inputs then add it to the arraylist
+                Student student = new Student(stuID, stuName, semester, courseName);
+                studentList.add(student);
 
-            System.out.println(" > Student added :) \n");
-            
+                System.out.println(" > Student added :) \n");
+            } else {
+                System.out.println("Student schedule already exists! Input again.");
+                continue;
+            }   
         } while (true);
-        
-        
+
     }
 
     public static void FindAndSort(ArrayList<Student> studentList) {
@@ -171,7 +156,8 @@ public class ManagerUtilities {
                     }
                 }
 
-                // Print out the whole schedule of that student and let user choose which to operate on
+                // Print out the whole schedule of that student and let user choose which to
+                // operate on
                 System.out.println(" > Here's the schedule of student ID " + searchID + ": ");
                 System.out.println("Name\t\tSemester\t\tCourseName");
                 for (Student student : foundStudentList) { // tranverse the temporary student list
@@ -180,13 +166,13 @@ public class ManagerUtilities {
                 }
 
                 // Get user input on choosing schedule
-                int scheduleInput = input.getNumber("Choose one schedule to perform operations on: ", 0, foundStudentList.size());
-                Student scheduleToUpdate = foundStudentList.get(scheduleInput); // <---- exact schedule of student selected by user
-                
+                int scheduleInput = input.getNumber("Choose one schedule to perform operations on: ", 0,
+                        foundStudentList.size());
+                Student scheduleToUpdate = foundStudentList.get(scheduleInput); // <---- exact schedule of student
+                                                                                // selected by user
+
                 // Get user input on choosing manage operation
                 String doubleChoice = input.getDoubleChoice("Update / Delete (type U or D)", "U", "D");
-
-                
 
                 // UPDATE CASE
                 if (doubleChoice.equals("U")) {
@@ -194,7 +180,8 @@ public class ManagerUtilities {
                     int updateChoice;
                     // Student Update loop
                     do {
-                        System.out.println("1. Student ID | 2. Student Name | 3. Schedule Semester | 4. Schedule Course Name | 5. Cancel");
+                        System.out.println(
+                                "1. Student ID | 2. Student Name | 3. Schedule Semester | 4. Schedule Course Name | 5. Cancel");
                         updateChoice = input.getNumber("Please choose an element to update: ", 1, 5);
 
                         switch (updateChoice) {
@@ -220,20 +207,21 @@ public class ManagerUtilities {
                     deleteSchedule(scheduleToUpdate, studentList);
                 }
 
-                //Remove duplicates if found any
-  
+                // Remove duplicates if found any
+
                 break;
             }
         } while (true);
-        
-        
+
     }
 
     public static void displayAll(ArrayList<Student> studentList) {
         System.out.println("ID\t\tName\t\tSemester\t\tCourse Name");
-        //tranverse the original student list and simply print out each student schedule
+        // tranverse the original student list and simply print out each student
+        // schedule
         for (Student student : studentList) {
-            System.out.println(student.getStuID() + "\t\t" + student.getName() + "\t\t" + student.getSemester() + "\t\t\t" + student.getCourseName());
+            System.out.println(student.getStuID() + "\t\t" + student.getName() + "\t\t" + student.getSemester()
+                    + "\t\t\t" + student.getCourseName());
         }
     }
 
@@ -274,7 +262,7 @@ public class ManagerUtilities {
         } while (true);
 
     }
-    
+
     private static void updateName(ArrayList<Student> studentList, int searchID) {
         do {
             String nameUpdate = input.getString("Input new name: ");
@@ -293,37 +281,28 @@ public class ManagerUtilities {
 
     private static void updateCourse(Student scheduleToUpdate, ArrayList<Student> studentList) {
         do {
-            String courseNameUpdate = null;
-            // User inputs course name
-            // note: choose course from an existing list
-            int courseNumber = input.getNumber("Input course number to update (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1,
-                    3);
-
-            // initialize courseName from courseNumber input
-            switch (courseNumber) {
-                case 1:
-                    courseNameUpdate = "Java";
-                    break;
-                case 2:
-                    courseNameUpdate = ".Net";
-                    break;
-                case 3:
-                    courseNameUpdate = "C/C++";
-                    break;
-                default:
-                    break;
-            }
+            String courseNameUpdate = input.getCourse();
 
             // tranverse the original list
             for (Student student : studentList) {
                 // Finding exact student in original list by checking ID courseName and semester
                 if (student.getStuID() == scheduleToUpdate.getStuID()
                         && student.getCourseName().equals(scheduleToUpdate.getCourseName())
-                        && student.getSemester() == scheduleToUpdate.getSemester()) {
-                    student.setCourseName(courseNameUpdate);
+                        && student.getSemester() == scheduleToUpdate.getSemester()){
+                            
+                            // checks if updated entry would be identical with any existing entry in student list
+                            if(!checkDuplicate(studentList, student.getStuID(), student.getSemester(), courseNameUpdate)){
+
+                                // set individual schedule's course name
+                                student.setCourseName(courseNameUpdate);
+                                System.out.println(" > Course name updated! :) \n");
+                                break;
+                            } else {
+                                System.out.println("Update entry would duplicate with another schedule! Try again.");
+                                continue;
+                            }
                 }
             }
-            System.out.println(" > Course name updated! :) \n");
             break;
         } while (true);
     }
@@ -333,43 +312,56 @@ public class ManagerUtilities {
             // take semester integer from user input
             int semesterUpdate = input.getNumber("Input semester to update", 0, Integer.MAX_VALUE);
 
-            // tranverse the original student list
+            // tranverse the original list
             for (Student student : studentList) {
                 // Finding exact student in original list by checking ID courseName and semester
                 if (student.getStuID() == scheduleToUpdate.getStuID()
                         && student.getCourseName().equals(scheduleToUpdate.getCourseName())
-                        && student.getSemester() == scheduleToUpdate.getSemester()) {
-                    student.setSemester(semesterUpdate);
-                }
+                        && student.getSemester() == scheduleToUpdate.getSemester()){
+                            
+                            // checks if updated record would be identical with any existing record in student list
+                            if(!checkDuplicate(studentList, student.getStuID(), semesterUpdate, student.getCourseName())){
+
+                                // set individual schedule's semester
+                                student.setSemester(semesterUpdate); 
+                                System.out.println(" > Course name updated! :) \n");
+                                break;
+                            } else {
+                                System.out.println("Update record would duplicate with another schedule! Try again.");
+                                break;
+                            }
+                } 
             }
-            System.out.println(" > Semester updated! :) \n");
             break;
         } while (true);
     }
 
     private static void deleteSchedule(Student scheduleToUpdate, ArrayList<Student> studentList) {
-        for (int i = 0; i < studentList.size(); i++){  //Using for-index loop to avoid ConcurrentModificationException  
-            Student student = studentList.get(i); 
-            // Finding exact student in original list by checking ID courseName and semester, then delete 
+        for (int i = 0; i < studentList.size(); i++) { // Using for-index loop to avoid ConcurrentModificationException
+            Student student = studentList.get(i);
+            // Finding exact student in original list by checking ID courseName and
+            // semester, then delete
             if (student.getStuID() == scheduleToUpdate.getStuID()
                     && student.getCourseName().equals(scheduleToUpdate.getCourseName())
                     && student.getSemester() == scheduleToUpdate.getSemester()) {
                 studentList.remove(student);
-            } 
+                break;
+            }
         }
         System.out.println(" > Student schedule deleted :> \n");
     }
-    
-    public static boolean isDuplicate(ArrayList<Student> studentList, int stuID, int semester, String courseName) {
+
+    public static boolean checkDuplicate(ArrayList<Student> studentList, int stuID, int semester, String courseName) {
+        boolean isExist = false;
         // access each element in the list
         for (Student student : studentList) {
-            // check id, semester, course Name entered has equals with id, semester, course name in the list
+            // checks if inputted record has duplicates with any existing record in the list
             if (student.getStuID() == stuID
                     && student.getCourseName().equals(courseName)
                     && student.getSemester() == semester) {
-                return false;
+                isExist = true;
             }
         }
-        return true;
+        return isExist;
     }
 }
