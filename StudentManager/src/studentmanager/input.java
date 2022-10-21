@@ -70,6 +70,12 @@ public class input {
                 System.out.println("Inputted string can't be empty!");
                 continue;
             }
+            
+            //checks if user input contains number
+            if(!input.matches("^[a-zA-Z ]+$")){
+                System.out.println("Inputted string contains invalid characters!");
+                continue;
+            }
 
             break;
         } while (true);
