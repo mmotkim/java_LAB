@@ -72,15 +72,19 @@ public class input {
             }
             
             //checks if user input contains number
-            if(!input.matches("^[a-zA-Z ]+$")){
+
+            // ^ : marks beginning of string input
+            // $ : marks the end of the string input
+            // + : matches if contains at least one occurance of characters inside the brackets [ ]
+            // [a-zA-Z ]: allowed letters consist of lowercase and uppercase alphabetical letters and space.
+            if(input.matches("^[a-zA-Z ]+$")){
+                return input;
+            } else {
                 System.out.println("Inputted string contains invalid characters!");
-                continue;
             }
 
-            break;
         } while (true);
 
-        return input;
     }
 
     public static String getDoubleChoice(String prompt, String firstChoice, String secondChoice) {
@@ -103,7 +107,7 @@ public class input {
             if (input.equals(firstChoice) || input.equals(secondChoice)) {
                 break;
             } else {
-                System.out.println("Inputted choice isn't appropriate");
+                System.out.println("Inputted choice isn't appropriate!");
             }
 
         } while (true);
@@ -112,7 +116,7 @@ public class input {
 
         // 1 duc java
         // 1 duc .net
-        // 2 nam
+        // 2 nam java
     }
 
     public static String getCourse(){

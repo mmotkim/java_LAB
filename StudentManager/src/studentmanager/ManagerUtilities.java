@@ -18,17 +18,16 @@ public class ManagerUtilities {
 
         // Declare variables and objects
         String stuName = null;
-        String courseName = null;
 
         // note: ID CAN BE DUPLICATED
 
         // Student schedule addition Loop
         do {
 
-            // Loop checking NUMBER of students exceeding 10 (count for unique IDs)
+            // Loop checking NUMBER of students exceeding 10 (counter for unique IDs)
             int count = 1;
             for (Student student : studentList) { // Tranverse over the studentList
-                // Creates another loop/list to compare the students' IDs
+                // Creates another loop & list to compare the students' IDs
                 for (Student uniqueIDs : studentList) {
                     // Checks if stuIDs from the first loop is different from elements throughout the duplicated ones,
                     if (student.getStuID() != uniqueIDs.getStuID()) {
@@ -37,8 +36,8 @@ public class ManagerUtilities {
                 }
                 break;
             }
-
-            if (count >= 3) {// <----- MAX student required before asking
+            
+            if (count >= 3) {// <----- MAX number of students required before asking
                 String choice = input.getDoubleChoice("Do you want to continue (Y/N)?", "Y", "N");
 
                 if (!choice.equals("Y")) {
@@ -68,7 +67,7 @@ public class ManagerUtilities {
             // User inputs semester
             int semester = input.getNumber("Input Semester: ", 1, Integer.MAX_VALUE);
 
-            courseName = input.getCourse();
+            String courseName = input.getCourse();
 
             // check if schedule is identical to any existing schedule
             if (!checkDuplicate(studentList, stuID, semester, courseName)) {
@@ -80,15 +79,20 @@ public class ManagerUtilities {
                 System.out.println(" > Student added :) \n");
             } else {
                 System.out.println("Student schedule already exists! Input again.");
-                continue;
             }
         } while (true);
 
     }
 
     public static void FindAndSort(ArrayList<Student> studentList) {
+
         // Student Schedule Search & Sort Loop
         do {
+            if (studentList.isEmpty()) {
+                System.out.println("No student to search for!");
+                break;
+            }
+            
             String searchInput = input.getString("Input student name to search: ");
 
             // Creates temporary student list to store the found info
@@ -98,7 +102,7 @@ public class ManagerUtilities {
             for (Student student : studentList) {
 
                 // checks if student name contains search input
-                if (student.getName().contains(searchInput)) {
+                if (student.getName().toLowerCase().contains(searchInput.toLowerCase())) {
                     // Add the newly accessed info to the arraylist studentInfo
                     foundStudentList.add(student);
 
@@ -130,6 +134,11 @@ public class ManagerUtilities {
 
         // Student Search by ID Loop
         do {
+            if (studentList.isEmpty()){
+                System.out.println("No student to update!");
+                break;
+            }
+            
             int searchID = input.getNumber("Input ID of student to update/delete: ", 0, Integer.MAX_VALUE);
 
             // check if inputted ID doesn't exists
@@ -157,12 +166,12 @@ public class ManagerUtilities {
                 System.out.println("Name\t\tSemester\t\tCourseName");
                 for (Student student : foundStudentList) { // tranverse the temporary student list
                     student.displayOne();
-                    System.out.print("\t\t" + foundStudentList.indexOf(student) + "\n");
+                    System.out.print("\t\t" + (foundStudentList.indexOf(student)+1)  + "\n");
                 }
 
                 // Get user input on choosing schedule with index
-                int scheduleInput = input.getNumber("Choose one schedule to perform operations on: ", 0, foundStudentList.size());
-                Student scheduleToUpdate = foundStudentList.get(scheduleInput); // <---- exact schedule of student selected by user
+                int scheduleInput = input.getNumber("Choose one schedule to perform operations on: ", 1, foundStudentList.size());
+                Student scheduleToUpdate = foundStudentList.get(scheduleInput-1); // <---- exact schedule of student selected by user
 
                 // Get user input on choosing manage operation
                 String doubleChoice = input.getDoubleChoice("Update / Delete (type U or D)", "U", "D");
@@ -199,7 +208,6 @@ public class ManagerUtilities {
                     deleteSchedule(scheduleToUpdate, studentList);
                 }
 
-
                 break;
             }
         } while (true);
@@ -207,15 +215,18 @@ public class ManagerUtilities {
     }
 
     public static void displayAll(ArrayList<Student> studentList) {
-        System.out.println("ID\t\tName\t\tSemester\t\tCourse Name");
-        // tranverse the original student list and simply print out each student
-        // schedule
-        for (Student student : studentList) {
-            System.out.println(student.getStuID() + "\t\t" + student.getName() + "\t\t" + student.getSemester()
-                    + "\t\t\t" + student.getCourseName());
+        if(studentList.isEmpty()){
+            System.out.println("No student to display!");
+        } else {
+            System.out.println("ID\t\tName\t\tSemester\t\tCourse Name");
+            // tranverse the original student list and simply print out each student schedule
+            for (Student student : studentList) {
+                System.out.println(student.getStuID() + "\t\t" + student.getName() + "\t\t" + student.getSemester() + "\t\t\t" + student.getCourseName());
+            }
         }
     }
 
+    
     // Other utility sub functions
     public static boolean checkIDExisting(int stuID, ArrayList<Student> studentList) {
         // declare variable
