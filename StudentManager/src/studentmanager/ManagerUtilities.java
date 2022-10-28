@@ -187,10 +187,10 @@ public class ManagerUtilities {
 
                         switch (updateChoice) {
                             case 1:// Change student ID (note: Change all instances of schedule)
-                                updateID(studentList, searchID);
+                                updateID(scheduleToUpdate, studentList);
                                 break;
                             case 2:// Change student name (note: change all instances of that student name)
-                                updateName(studentList, searchID);
+                                updateName(scheduleToUpdate, studentList);
                                 break;
                             case 3:// Change schedule's semester
                                 updateSemester(scheduleToUpdate, studentList);
@@ -243,35 +243,53 @@ public class ManagerUtilities {
         return isExist;
     }
 
-    public static void updateID(ArrayList<Student> studentList, int searchID) {
+    public static void updateID(Student scheduleToUpdate, ArrayList<Student> studentList) {
+        boolean duplicate = false;
+        int IDUpdate;
         do {
-            int IDUpdate = input.getNumber("Input new ID: ", 0, Integer.MAX_VALUE);
+           
+            IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
 
-            // Checks if inputted ID exists
-            if (checkIDExisting(IDUpdate, studentList)) {
-                System.out.println("ID duplicated!, try again!");
-            } else {
-                // Update new ID on all instances of schedule
-                for (Student student : studentList) {// tranverse the original student list
-                    if (student.getStuID() == searchID) {
-                        student.setStuID(IDUpdate);
+            //tranverse the studentList
+            for (Student student : studentList){
+                //Find the students with the same ID
+                if (student.getStuID() == scheduleToUpdate.getStuID()){              
+                    if (checkDuplicate(studentList, IDUpdate, student.getSemester(), student.getCourseName())){
+                        System.out.println("Update entry would duplicate with another schedule! Try again.");
+                        duplicate = true;
                     }
+                    
+                    else if (!checkDuplicate(studentList, IDUpdate, student.getName())){
+                        System.out.println("Update entry would duplicate with another schedule! Try again.2");
+                        duplicate = true;
+                    } else {
+                        duplicate = false;
+                    }
+                    
+                    // Update new ID on all instances of schedule
                 }
-                System.out.println(" > Student ID updated! :>\n");
-                break;
             }
-
-        } while (true);
+            
+            
+            
+        } while (duplicate);
+        
+        for (Student student : studentList) {
+            if (student.getStuID() == scheduleToUpdate.getStuID()){     
+                student.setStuID(IDUpdate);
+            }
+        }
+        System.out.println(" > Student ID updated! :>\n");
 
     }
 
-    private static void updateName(ArrayList<Student> studentList, int searchID) {
+    private static void updateName(Student scheduleToUpdate, ArrayList<Student> studentList) {
         do {
             String nameUpdate = input.getString("Input new name: ");
 
             // Update new name on all instances of schedule
             for (Student student : studentList) {// tranverse the original student list
-                if (student.getStuID() == searchID) {// Change all student name based on id
+                if (student.getStuID() == scheduleToUpdate.getStuID()) {// Change all student name based on id
                     student.setName(nameUpdate);
                 }
             }
@@ -301,6 +319,7 @@ public class ManagerUtilities {
                             System.out.println("Same course name inputted, it will remain as is."); 
                             break;
                         }
+
                         continue;
                     }
 
@@ -371,6 +390,18 @@ public class ManagerUtilities {
             if (student.getStuID() == stuID
                     && student.getCourseName().equals(courseName)
                     && student.getSemester() == semester) {
+                isExist = true;
+            }
+        }
+        return isExist;
+    }
+    
+    public static boolean checkDuplicate(ArrayList<Student> studentList, int stuID, String stuName) {
+        boolean isExist = false;
+        // access each element in the list
+        for (Student student : studentList) {
+            // checks if inputted record has duplicates with any existing record in the list
+            if (student.getStuID() == stuID && student.getName().equals(stuName)){
                 isExist = true;
             }
         }
