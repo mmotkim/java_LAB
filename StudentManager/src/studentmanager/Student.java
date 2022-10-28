@@ -39,7 +39,7 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * @param name the name to set
+     * @param stuName the name to set
      */
     public void setName(String stuName) {
         this.stuName = stuName;
@@ -74,8 +74,9 @@ public class Student implements Comparable<Student> {
     }
 
     @Override
-    public int compareTo(Student o) {
-        return o.stuName.compareTo(stuName);
+    public int compareTo(Student student) {
+        //ascending
+        return this.stuName.compareTo(student.getName());
     }
 
     public void displayOne(){

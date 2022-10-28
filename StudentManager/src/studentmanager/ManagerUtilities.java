@@ -247,38 +247,51 @@ public class ManagerUtilities {
         boolean duplicate = false;
         int IDUpdate;
         do {
-           
             IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
-
-            //tranverse the studentList
-            for (Student student : studentList){
-                //Find the students with the same ID
-                if (student.getStuID() == scheduleToUpdate.getStuID()){              
-                    if (checkDuplicate(studentList, IDUpdate, student.getSemester(), student.getCourseName())){
-                        System.out.println("Update entry would duplicate with another schedule! Try again.");
-                        duplicate = true;
-                    }
+            //tranverse the student list and access the all the student with ID searched
+            for (Student student : studentList) {
+                if (student.getStuID() == scheduleToUpdate.getStuID()) {
                     
-                    else if (!checkDuplicate(studentList, IDUpdate, student.getName())){
-                        System.out.println("Update entry would duplicate with another schedule! Try again.2");
+                    //check if student schedule to update would duplicate with other schedule with ID Sem and course name
+                    if (checkDuplicate(studentList, IDUpdate, student.getSemester(), student.getCourseName())) {
+                        System.out.println("Duplicated!");
                         duplicate = true;
+                        break;
+                    }
+                    //check if student's name and update ID combination isn't duplicated
+                    else if (!checkDuplicate(studentList, IDUpdate, scheduleToUpdate.getName())) {
+                        
+                        //check if this is new ID
+                        if (!checkIDExisting(IDUpdate, studentList)) {
+                            duplicate = false;
+                            break;
+                        }
+                        
+                        //check if this ID exists
+                        else {
+                            System.out.println("Duplicated! 2");
+                            duplicate = true;
+                            break;
+                        }
+                        
+                    //allowing ID to be updated to other student's ID but with the same name
                     } else {
                         duplicate = false;
                     }
-                    
-                    // Update new ID on all instances of schedule
+                }
+            }
+
+        } while (duplicate);
+        
+        // Update new ID on all instances of schedule
+        int IDToUpdate = scheduleToUpdate.getStuID();
+            for (Student student : studentList) {
+                if (student.getStuID() == IDToUpdate) {
+                    student.setStuID(IDUpdate);
                 }
             }
             
-            
-            
-        } while (duplicate);
         
-        for (Student student : studentList) {
-            if (student.getStuID() == scheduleToUpdate.getStuID()){     
-                student.setStuID(IDUpdate);
-            }
-        }
         System.out.println(" > Student ID updated! :>\n");
 
     }
@@ -402,6 +415,21 @@ public class ManagerUtilities {
         for (Student student : studentList) {
             // checks if inputted record has duplicates with any existing record in the list
             if (student.getStuID() == stuID && student.getName().equals(stuName)){
+                isExist = true;
+            }
+        }
+        return isExist;
+    }
+
+    public static boolean checkDuplicate(ArrayList<Student> studentList, int stuID, String stuName, int semester, String courseName) {
+        boolean isExist = false;
+        // access each element in the list
+        for (Student student : studentList) {
+            // checks if inputted record has duplicates with any existing record in the list
+            if (student.getStuID() == stuID
+                    && student.getName().equals(stuName)
+                    && student.getCourseName().equals(courseName)
+                    && student.getSemester() == semester) {
                 isExist = true;
             }
         }
