@@ -332,8 +332,6 @@ public class ManagerUtilities {
                             System.out.println("Same course name inputted, it will remain as is."); 
                             break;
                         }
-
-                        continue;
                     }
 
                     // set individual schedule's course name
@@ -366,8 +364,7 @@ public class ManagerUtilities {
                         if(semesterUpdate == student.getSemester()){//allowing user to exit when inputting the same course name of schedule (i.e unchanged schedule)
                             System.out.println(" > Same course name inputted, it will remain as is."); 
                             break;
-                        }
-                        continue;    
+                        }  
                     }
 
                     // set individual schedule's semester
