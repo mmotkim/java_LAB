@@ -217,26 +217,43 @@ public class ManagerUtilities {
 
     public static void updateID(int searchID, ArrayList<Student> studentList) {
         int IDUpdate;
-        //Student schedule update loop
+        
+        boolean duplicate = false;
+
+        //Find exact schedule to update
+        Student scheduleToUpdate = getScheduleFromID(studentList, searchID);
+
+        //Student schedule update Loop
         do {
             IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
-            //Check if new student ID would duplicate with another student
-            if (checkIDExisting(IDUpdate, studentList)){
-                System.out.println("Duplicated! Try again");
-                continue;
-            }
-            else if (!checkIDExisting(IDUpdate, studentList)){
-                //update new ID on all searched student schedules  
-                for (Student student : studentList) {//tranverse the student list and access the all the student with ID searched
-                    if (student.getStuID() == searchID){
-                        student.setStuID(IDUpdate);
-                    }
+            //tranverse the student list and access the all the student with ID searched
+            for (Student student : studentList) {
+                //access exact schedule to update on original list
+                if (student.getStuID() == scheduleToUpdate.getStuID()
+                    && student.getSemester() == scheduleToUpdate.getSemester()
+                    && student.getCourseName().equals(scheduleToUpdate.getCourseName())) {
+                        
+                        //check for duplication with another schedule
+                        if(checkDuplicate(studentList, IDUpdate, scheduleToUpdate.getSemester(), scheduleToUpdate.getCourseName())){
+                            System.out.println("Duplicated! try again.");
+                            duplicate = true;
+                            break;
+                        //check for duplication with antoher student
+                        } else if(checkIDExisting(IDUpdate, studentList)){
+                            System.out.println("Duplicated! try again.");
+                            duplicate = true;
+                            break;
+                        } else {
+                            student.setStuID(IDUpdate);
+                            duplicate = false;
+                            break;
+                        } 
                 }
-                System.out.println("Student ID Updated!");
-                break;
             }
-            break;
-        } while (true);
+
+        } while (duplicate);
+        System.out.println("Student updating complete");
+    
     }
 
     private static void updateName(int searchID, ArrayList<Student> studentList) {
