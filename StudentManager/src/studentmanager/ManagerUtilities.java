@@ -177,7 +177,7 @@ public class ManagerUtilities {
 
                 //DELETE CASE
                 else if (doubleChoice.equals("D")){
-                    deleteStudent(searchID, studentList)
+                    deleteStudent(searchID, studentList);
                 }
             }
 
@@ -217,26 +217,29 @@ public class ManagerUtilities {
 
     public static void updateID(int searchID, ArrayList<Student> studentList) {
         int IDUpdate;
+        Student scheduleToUpdate = getScheduleFromID(studentList, searchID);
         //Student schedule update loop
-        do {
-            IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
-            //Check if new student ID would duplicate with another student
-            if (checkIDExisting(IDUpdate, studentList)){
-                System.out.println("Duplicated! Try again");
-                continue;
-            }
-            else if (!checkIDExisting(IDUpdate, studentList)){
-                //update new ID on all searched student schedules  
-                for (Student student : studentList) {//tranverse the student list and access the all the student with ID searched
-                    if (student.getStuID() == searchID){
-                        student.setStuID(IDUpdate);
-                    }
+        IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
+        Student studentUpdateTo = autoGetStudentFromID(studentList, IDUpdate);
+        //Loop finding exact student in original list
+        for (Student student : studentList){
+            if (student == scheduleToUpdate){
+                //Check if new student ID would duplicate with another student
+                while(checkDuplicate(studentList, IDUpdate, student.getSemester(), student.getCourseName())){
+                    System.out.println("Duplicated with another stundet!");
+                    IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
+                    studentUpdateTo = autoGetStudentFromID(studentList, IDUpdate);
                 }
-                System.out.println("Student ID Updated!");
+
+                //Set student name to the sane name of the student with ID equals user's input new ID 
+                if (checkIDExisting(IDUpdate, studentList)){
+                    student.setName(studentUpdateTo.getName());
+                }
+                student.setStuID(IDUpdate);
+                System.out.println("Student ID Updated");
                 break;
             }
-            break;
-        } while (true);
+        }
     }
 
     private static void updateName(int searchID, ArrayList<Student> studentList) {
@@ -382,6 +385,18 @@ public class ManagerUtilities {
 
         return scheduleToUpdate;
     }
+
+    public static Student autoGetStudentFromID(ArrayList<Student> studentList, int id){
+        // access over the elements in the list
+        for (Student student : studentList) {
+            //compare the input id with the id in the list is there any duplicate
+            if (student.getStuID() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+    
     public static boolean checkDuplicate(ArrayList<Student> studentList, int stuID, int semester, String courseName) {
         boolean isExist = false;
         // access each element in the list
