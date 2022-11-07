@@ -217,29 +217,46 @@ public class ManagerUtilities {
 
     public static void updateID(int searchID, ArrayList<Student> studentList) {
         int IDUpdate;
-        Student scheduleToUpdate = getScheduleFromID(studentList, searchID);
-        //Student schedule update loop
-        IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
-        Student studentUpdateTo = autoGetStudentFromID(studentList, IDUpdate);
-        //Loop finding exact student in original list
-        for (Student student : studentList){
-            if (student == scheduleToUpdate){
-                //Check if new student ID would duplicate with another student
-                while(checkDuplicate(studentList, IDUpdate, student.getSemester(), student.getCourseName())){
-                    System.out.println("Duplicated with another stundet!");
-                    IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
-                    studentUpdateTo = autoGetStudentFromID(studentList, IDUpdate);
-                }
+        
+        boolean duplicate = false;
 
-                //Set student name to the sane name of the student with ID equals user's input new ID 
-                if (checkIDExisting(IDUpdate, studentList)){
-                    student.setName(studentUpdateTo.getName());
+        //Find exact schedule to update
+        Student scheduleToUpdate = getScheduleFromID(studentList, searchID);
+
+        //Student schedule update Loop
+        do {
+            IDUpdate = input.getNumber("Input new ID: ", 1, Integer.MAX_VALUE);
+            //tranverse the student list and access the all the student with ID searched
+            for (Student student : studentList) {
+                //access exact schedule to update on original list
+                if (student.getStuID() == scheduleToUpdate.getStuID()
+                    && student.getSemester() == scheduleToUpdate.getSemester()
+                    && student.getCourseName().equals(scheduleToUpdate.getCourseName())) {
+                        
+                        //check for duplication with another schedule
+                        if(checkDuplicate(studentList, IDUpdate, scheduleToUpdate.getSemester(), scheduleToUpdate.getCourseName())){
+                            System.out.println("Duplicated! try again.");
+                            duplicate = true;
+                            break;
+                        //check for duplication with another student
+                        } else if(checkIDExisting(IDUpdate, studentList)){
+                            //update that student name to the name of student with same ID
+                            student.setName(getFirstStudentFromID(studentList, IDUpdate).getName());
+                            //and update ID accordingly
+                            student.setStuID(IDUpdate);
+                            duplicate = false;
+                            break;
+                        } else {//case if inputted new ID is a new ID in studentList
+                            student.setStuID(IDUpdate);
+                            duplicate = false;
+                            break;
+                        } 
                 }
-                student.setStuID(IDUpdate);
-                System.out.println("Student ID Updated");
-                break;
             }
-        }
+        
+        } while (duplicate);
+        System.out.println(" > Student updating complete");
+
     }
 
     private static void updateName(int searchID, ArrayList<Student> studentList) {
@@ -339,6 +356,7 @@ public class ManagerUtilities {
             } 
         }
 
+        //Delete schedule case
         else if (deleteType.equals("2")){
             //Get exact schedule from student
             Student scheduleToUpdate = getScheduleFromID(studentList, searchID);
@@ -385,18 +403,17 @@ public class ManagerUtilities {
 
         return scheduleToUpdate;
     }
-
-    public static Student autoGetStudentFromID(ArrayList<Student> studentList, int id){
-        // access over the elements in the list
-        for (Student student : studentList) {
-            //compare the input id with the id in the list is there any duplicate
-            if (student.getStuID() == id) {
+    public static Student getFirstStudentFromID(ArrayList<Student> studentList, int searchID){
+        //tranverse the original list
+        for(Student student : studentList){
+            //checks if student ID matches
+            if (student.getStuID() == searchID){
                 return student;
             }
         }
         return null;
+        
     }
-    
     public static boolean checkDuplicate(ArrayList<Student> studentList, int stuID, int semester, String courseName) {
         boolean isExist = false;
         // access each element in the list
