@@ -113,10 +113,10 @@ public class ManagerUtilities {
                 System.out.println(" > Student not found! try again.");
                 break;
             }
-
+            
             Collections.sort(foundStudentList);
 
-            // when all is searched, prints out the temporary arraylist studentInfo
+            // when all is sorted, prints out the temporary arraylist studentInfo
             System.out.println("Name\t\tSemester\t\tCourse Name");
 
             for (Student student : foundStudentList) {
@@ -342,23 +342,8 @@ public class ManagerUtilities {
     }
 
     private static void deleteStudent(int searchID, ArrayList<Student> studentList) {
-        String deleteType = input.getDoubleChoice("1. Delete Student | 2. Choose student's schedule and delete", "1", "2");
 
-        //Delete Student Case
-        if (deleteType.equals("1")){
-            for (int i = 0; i < studentList.size(); i++) { // Using for-index loop to avoid ConcurrentModificationException
-                Student student = studentList.get(i);
-                // Finding exact student in original list by checking ID courseName and semester, then delete 
-                if (student.getStuID() == searchID) {
-                    studentList.remove(student);
-                    break;
-                }
-            } 
-        }
-
-        //Delete schedule case
-        else if (deleteType.equals("2")){
-            //Get exact schedule from student
+            //Get exact schedule from student with user input
             Student scheduleToUpdate = getScheduleFromID(studentList, searchID);
         
             for (int i = 0; i < studentList.size(); i++) { // Using for-index loop to avoid ConcurrentModificationException
@@ -371,8 +356,6 @@ public class ManagerUtilities {
                     break;
                 }
             }
-        }
-        
         System.out.println(" > Student deleting complete! :> \n");
     }
 

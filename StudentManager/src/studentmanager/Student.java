@@ -18,14 +18,14 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * @return int return the id
+     * @return stuID return the id
      */
     public int getStuID() {
         return stuID;
     }
 
     /**
-     * @param id the id to set
+     * @param stuID the id to set
      */
     public void setStuID(int stuID) {
         this.stuID = stuID;
@@ -76,7 +76,7 @@ public class Student implements Comparable<Student> {
     @Override
     public int compareTo(Student student) {
         //ascending
-        return this.stuName.compareTo(student.getName());
+        return this.getName().compareTo(student.getName());
     }
 
     public void displayOne(){
