@@ -4,6 +4,9 @@
  */
 package workermanager;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,13 +18,16 @@ public class WorkerManager {
 
     /**
      * @param args the command line arguments
+     * @throws IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //1.Declare variables and create objects
+        File WorkerListFile = ManagementUtilities.checkFileExisting("WorkerList.txt");
+        File SalaryHistory = ManagementUtilities.checkFileExisting("SalaryHistory.txt");
+        
         Scanner sc = new Scanner(System.in);
         int choice;
-        ArrayList<Worker> WorkerList = new ArrayList<>();
-        
+
         //2.Navigational code 
         do{
             //2.1 Display menu
@@ -31,16 +37,16 @@ public class WorkerManager {
             //2.3 Loop for management utilities
             switch(choice){
                 case 1://Add Worker to the arraylist
-                    ManagementUtilities.addWorker(WorkerList);
+                    ManagementUtilities.addWorker(WorkerListFile);
                     break;
                 case 2://Up Salary - increase a worker's salary by an user input's amount
-                    ManagementUtilities.increaseSalary(WorkerList);
+                    ManagementUtilities.increaseSalary(WorkerListFile, SalaryHistory);
                     break;
                 case 3://Down salary - decrease a worker's salary by an user input's amount
-                    ManagementUtilities.decreaseSalary(WorkerList);
+                    ManagementUtilities.decreaseSalary(WorkerListFile, SalaryHistory);
                     break;
                 case 4://Display information salary
-                    ManagementUtilities.displayAll(WorkerList);
+                    ManagementUtilities.displayAll(WorkerListFile, SalaryHistory);
                     break;
             } 
         } while (choice < 5);
