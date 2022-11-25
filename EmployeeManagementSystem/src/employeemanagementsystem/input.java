@@ -2,8 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fruitshop;
+package employeemanagementsystem;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 /**
@@ -11,7 +15,6 @@ import java.util.Scanner;
  * @author Mmotkim
  */
 class input {
-
     public static int getNumber(String prompt, int min, int max) {
         // Declare variables and create objects
         Scanner sc = new Scanner(System.in);
@@ -63,7 +66,6 @@ class input {
         return (int) number;
     }
     
-    
     public static String getString(String prompt) {
         // Create objects and declare variables
         Scanner sc = new Scanner(System.in);
@@ -96,9 +98,74 @@ class input {
 
     }
     
-    
-    
-    
+    public static String getString(String prompt, String regex) {
+        // Create objects and declare variables
+        Scanner sc = new Scanner(System.in);
+        String input;
+
+        // User Input Loop for checking appropriate input format.
+        do {
+            System.out.print(prompt);
+            input = sc.nextLine();
+
+            // checks if user input is empty
+            if (input.isEmpty()) {
+                System.out.println("Inputted string can't be empty!");
+                continue;
+            }
+            
+            //checks if user input contains number
+
+            // ^ : marks beginning of string input
+            // $ : marks the end of the string input
+            // [a-zA-Z ]: allowed letters consist of lowercase and uppercase alphabetical letters and space.
+            if(input.matches(regex)){
+                return input;
+            } else {
+                System.out.println("Inputted string must contains only 10 numbers and numbers only!");
+            }
+
+        } while (true);
+
+    }
+
+    public static LocalDate getDate() {
+        Scanner sc = new Scanner(System.in);
+        String input;
+        DateTimeFormatter VNTime = DateTimeFormatter.ofPattern("dd/MM/YYYY ");
+        LocalDate date = null;
+        
+        //date input loop
+        do{
+            System.out.println("Enter date of birth (day/month/year) : ");            
+            input = sc.nextLine();
+            
+            // checks if user input is empty
+            if (input.isEmpty()) {
+                System.out.println("Inputted string can't be empty!");
+                continue;
+            }
+            
+            try{
+                date = LocalDate.parse(input, VNTime);
+                
+                //checks if date inputted is valid in terms of age.
+                if(date.compareTo(LocalDate.now()) >= 0){//date inputted is in the future or present
+                    throw new Exception();
+                }
+            } catch (DateTimeParseException parseEx){
+                System.out.println("Wrong date format!");
+                continue;
+            } catch (Exception ex){
+                System.out.println("Birthday inputted is invalid! try again.");
+                continue;
+            }
+            
+            break;
+        }while(true);
+        
+        return date;
+    }
     
     public static String getDoubleChoice(String prompt, String firstChoice, String secondChoice) {
         // Create objects and declare variables
@@ -128,16 +195,4 @@ class input {
         return input;
 
     }
-    
-    //regex for complex phone number ^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$
-    //(123) 456-7890
-    //+(123) 456-7890
-    //+(123)-456-7890
-    //+(123) - 456-7890
-    //+(123) - 456-78-90
-    //123-456-7890
-    //123.456.7890
-    //1234567890
-    //+31636363634
-    //075-63546725
 }
