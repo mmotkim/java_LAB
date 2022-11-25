@@ -1,8 +1,16 @@
-package studentmanager;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package fruitshop;
 
 import java.util.Scanner;
 
-public class input {
+/**
+ *
+ * @author Mmotkim
+ */
+class input {
 
     public static int getNumber(String prompt, int min, int max) {
         // Declare variables and create objects
@@ -12,7 +20,7 @@ public class input {
 
         // User Input Loop for checking appropriate input format
         do {
-            System.out.println(prompt);
+            System.out.print(prompt);
             input = sc.nextLine();
 
             // checks if user input is empty
@@ -25,7 +33,7 @@ public class input {
                 number = Double.parseDouble(input);
 
                 // Checks if number input is within accepted range
-                if (number < min || number > max) {
+                if (number <= min || number >= max) {
                     throw new Exception();
 
                 }
@@ -54,7 +62,7 @@ public class input {
 
         return (int) number;
     }
-
+    
     public static String getString(String prompt) {
         // Create objects and declare variables
         Scanner sc = new Scanner(System.in);
@@ -62,7 +70,7 @@ public class input {
 
         // User Input Loop for checking appropriate input format.
         do {
-            System.out.println(prompt);
+            System.out.print(prompt);
             input = sc.nextLine();
 
             // checks if user input is empty
@@ -86,7 +94,7 @@ public class input {
         } while (true);
 
     }
-
+    
     public static String getDoubleChoice(String prompt, String firstChoice, String secondChoice) {
         // Create objects and declare variables
         Scanner sc = new Scanner(System.in);
@@ -94,7 +102,7 @@ public class input {
 
         // User Input Loop for checking appropriate input format.
         do {
-            System.out.println(prompt);
+            System.out.print(prompt);
             input = sc.nextLine().toUpperCase();
 
             // checks if user input is empty
@@ -114,29 +122,5 @@ public class input {
 
         return input;
 
-    }
-
-    public static String getCourse(){
-        String courseName = null;
-        // User inputs course name
-        // note: choose course from an existing list
-        int courseNumber = input.getNumber("Input course number to update (1 - Java ; 2 - .Net ; 3 - C/C++): ", 1, 3);
-
-        // initialize courseName from courseNumber input
-        switch (courseNumber) {
-            case 1:
-                courseName = "Java";
-                break;
-            case 2:
-                courseName = ".Net";
-                break;
-            case 3:
-                courseName = "C/C++";
-                break;
-            default:
-                break;
-        }
-
-        return courseName;
     }
 }

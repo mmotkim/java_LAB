@@ -4,8 +4,10 @@
  */
 package workermanager;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -163,7 +165,7 @@ public class ManagementUtilities {
 
     }
 
-    public static void displayAll(File WorkerListFile, File salaryHistoryFile) throws FileNotFoundException {
+    public static void displayAll(File WorkerListFile, File salaryHistoryFile) throws FileNotFoundException, IOException {
         ArrayList<Worker> WorkerList = ManagementUtilities.getWorkerList(WorkerListFile);
         ArrayList<SalaryHistory> SalaryHistory = getSalaryHistory(salaryHistoryFile);
         System.out.println("---------------------Display Information Salary--------------------");
@@ -213,23 +215,28 @@ public class ManagementUtilities {
         return SalaryHistory;
     }
 
-    public static ArrayList<Worker> getWorkerList(File workerListFile) throws FileNotFoundException {
-        Scanner sc = new Scanner(workerListFile);
+    public static ArrayList<Worker> getWorkerList(File workerListFile) throws FileNotFoundException, IOException {
         ArrayList<Worker> workerList = new ArrayList<>();
         String line;
-        Worker worker;
         String[] workerString;
-        
         //Scans each line on inputted file
-        while (sc.hasNext()) {
-            line = sc.nextLine();
-            workerString = line.split("|");
+//        while (sc.hasNext()) {
+//            line = sc.nextLine();
+//            workerString = line.split("|");
+//
+//            worker = new Worker(Integer.parseInt(workerString[0]), workerString[1], Integer.parseInt(workerString[2]), Integer.parseInt(workerString[3]), workerString[4]);
+//            workerList.add(worker);
+//        }
+//        sc.close();
 
-            worker = new Worker(Integer.parseInt(workerString[0]), workerString[1], Integer.parseInt(workerString[2]), Integer.parseInt(workerString[3]), workerString[4]);
+        BufferedReader br = new BufferedReader(new FileReader(workerListFile));
+        while((line = br.readLine()) != null){
+            workerString = line.split("|");
+            
+            Worker worker = new Worker(Integer.parseInt(workerString[0]), workerString[1], Integer.parseInt(workerString[2]), Integer.parseInt(workerString[3]), workerString[4]);
             workerList.add(worker);
         }
-        sc.close();
-
+ 
         return workerList;
     }
 
@@ -237,6 +244,7 @@ public class ManagementUtilities {
         //declare variable
         boolean isExist = false;
         Scanner sc = new Scanner(WorkerListFile);
+        
 
         while (sc.hasNext()) {
             String line = sc.nextLine();
