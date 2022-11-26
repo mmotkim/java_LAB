@@ -6,6 +6,7 @@ package employeemanagementsystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -68,9 +69,8 @@ class Management {
     }
 
     static void updateEmployee(ArrayList<Employee> employeeList) {
-        Scanner sc = new Scanner(System.in);
         int newId;
-
+        int choice = 0;
         //check if list is empty
         if(employeeList.isEmpty()){
             System.out.println("empty list!");
@@ -88,31 +88,106 @@ class Management {
             System.out.println("ID duplicated!");
             newId = input.getNumber("Input ID: ", 0, Integer.MAX_VALUE);
         }
-
-        update.setId(newId);
-
-        update.setFirstName(input.getString("Input new First Name: ")); 
-        update.setLastName(input.getString("Input new last name: "));
-        update.setPhone(input.getString("Input new phone number: ", "^[0-9]{10}$"));
-        update.setEmail(input.getString("Input new email:", "^[\\w]+@([\\w]+\\.)+[\\w-]{2,4}$"));
-        update.setAddress(input.getString("Input new address: "));
-        update.setDOB(input.getDate("Input new date of birth (day/month/year): "));
-        update.setSex(input.getDoubleChoice("Input new gender (M/L)", "M", "L"));
-        update.setSalary(input.getNumber("Input new salary: ", 0, Integer.MAX_VALUE));
-        update.setAgency(input.getString("Input new agency: "));
+        
+        //properties Update loop
+        do{
+            updateMenu();
+            choice = input.getNumber("Select an option: ", -1, 11);
+            
+            switch(choice){
+                case 1:
+                    update.setId(newId);
+                    break;
+                case 2:
+                    update.setFirstName(input.getString("Input new First Name: ")); 
+                    break;
+                case 3:
+                    update.setLastName(input.getString("Input new last name: "));
+                    break;
+                case 4:
+                    update.setPhone(input.getString("Input new phone number: ", "^[0-9]{10}$"));
+                    break;
+                case 5:
+                    update.setEmail(input.getString("Input new email:", "^[\\w]+@([\\w]+\\.)+[\\w-]{2,4}$"));
+                    break;
+                case 6:    
+                    update.setAddress(input.getString("Input new address: "));
+                    break;
+                case 7:
+                    update.setDOB(input.getDate("Input new date of birth (day/month/year): "));
+                    break;
+                case 8:
+                    update.setSex(input.getDoubleChoice("Input new gender (M/L)", "M", "L"));
+                    break;
+                case 9: 
+                    update.setSalary(input.getNumber("Input new salary: ", 0, Integer.MAX_VALUE));
+                    break;
+                case 10:
+                    update.setAgency(input.getString("Input new agency: "));
+                    break;  
+            }
+        } while(choice > 0);
 
     }
 
     static void removeEmployee(ArrayList<Employee> employeeList) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //check if list is empty
+        if(employeeList.isEmpty()){
+            System.out.println("empty list!");
+        }
+        //get exact employee from user input
+        Employee employeeToDelete = getEmployee(employeeList);
+        //delete that employee
+        employeeList.remove(employeeToDelete);
+
     }
 
     static void searchEmployee(ArrayList<Employee> employeeList) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Employee> foundList = new ArrayList<>();
+        //check if list is empty
+        if(employeeList.isEmpty()){
+            System.out.println("empty list!");
+        }
+        
+        //search loop
+        do{
+            String searchInput = input.getString("Input Employee name to search: ");
+            
+            //tranverse the employee list and add employees found to foundList
+            for (Employee employee : employeeList) {
+                if (employee.getFullName().contains(searchInput)){
+                    foundList.add(employee);
+                }
+            }
+            
+            if(foundList.isEmpty()){
+                System.out.println("No employee found! try again.");
+            } else 
+                displayAll(foundList);
+        } while(true);
+        
+        
+        
     }
 
+    static void updateMenu(){
+        System.out.println("Update Options:");
+        System.out.println("1. Update ID");
+        System.out.println("2. Update First Name");
+        System.out.println("3. Update Last Name");
+        System.out.println("4. Update Phone Number");
+        System.out.println("5. Update Email address");
+        System.out.println("6. Update address");
+        System.out.println("7. Update date of birth");
+        System.out.println("8. Update Gender");
+        System.out.println("9. Update Salary");
+        System.out.println("10. Update Agency");
+        System.out.println("0. Exit");
+    }
+    
     static void sortEmployee(ArrayList<Employee> employeeList) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Collections.sort(employeeList);
+        displayAll(employeeList);
     }
     
     static boolean checkIdExisting(ArrayList<Employee> employeeList, int id){

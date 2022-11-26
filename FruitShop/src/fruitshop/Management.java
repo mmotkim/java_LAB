@@ -59,24 +59,34 @@ class Management {
 
     }
 
-    static void viewOrders(Hashtable<Order, ArrayList<Fruit>> orderList) {
+    static void viewOrders(Hashtable<String, ArrayList<Order>> orderList) {
         if (orderList.isEmpty()) {
             System.out.println("No orders yet.");
             return;
         }
 
-        for (Map.Entry<Order, ArrayList<Fruit>> order : orderList.entrySet()) {
-            ArrayList<Fruit> orderFruitList = order.getValue();
+        for (Map.Entry<String, ArrayList<Order>> order : orderList.entrySet()) {
+            ArrayList<Order> orderDetailsList = order.getValue();
 
-            System.out.println("Customer: " + order.getKey().getCustomerName());
-            displayFruits(orderFruitList, true);
+            
+            for(Order orderDetails : orderDetailsList){
+                System.out.println("Customer: " + order.getKey());
+                displayFruits(orderDetails.getFruitList(), true);
+            }
+            
         }
 
     }
 
-    static void shop(ArrayList<Fruit> fruitList, Hashtable<Order, ArrayList<Fruit>> orderList) {
+    static void shop(ArrayList<Fruit> fruitList, Hashtable<String, ArrayList<Order>> orderList) {
         ArrayList<Fruit> tempFruitList = fruitList;
         ArrayList<Fruit> cart = new ArrayList<>();
+        //check if list is empty
+        if(fruitList.isEmpty()){
+            System.out.println("Empty shop!");
+            return;
+        }
+        //shopping loop
         do {
             displayFruits(tempFruitList, false);
 
@@ -126,8 +136,17 @@ class Management {
 
                 String customerName = input.getString("Input your name: ");
 
-                Order order = new Order(customerName, cart);
-                orderList.put(order, cart);
+                Order order = new Order(cart);
+                //if this is first order from customer
+                if(!orderList.containsKey(customerName)){
+                    ArrayList<Order> orderDetails = new ArrayList<>();
+                    orderDetails.add(order);
+                    orderList.put(customerName, orderDetails);
+                }
+                //if customer already had orders before
+                else if(orderList.containsKey(customerName)){
+                    orderList.get(customerName).add(order);
+                }
 
                 //Update original fruit list
                 fruitList = tempFruitList;

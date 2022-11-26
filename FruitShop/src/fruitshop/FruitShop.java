@@ -17,12 +17,11 @@ public class FruitShop {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //1.Create necessary objects 
+        //1.Create necessary objects and variables
         int choice;
         ArrayList<Fruit> fruitList = new ArrayList<>();
-        Hashtable<Order, ArrayList<Fruit>> orderList = new Hashtable<>();
-        
-        test(fruitList);
+        Hashtable<String, ArrayList<Order>> orderList = new Hashtable<>();
+        //Key: Customer name ; Value: customer's orders
         //2.Navigational code
         do{
             //2.1 Display menu
@@ -49,10 +48,6 @@ public class FruitShop {
         
     }
 
-    private static void test(ArrayList<Fruit> fruitList) {
-        fruitList.add(new Fruit(1, "banana", 3, 5, "china"));
-        fruitList.add(new Fruit(2, "mango", 5, 10, "vietnam"));
-    }
     
    
     

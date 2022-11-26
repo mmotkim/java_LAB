@@ -11,23 +11,14 @@ import java.util.ArrayList;
  * @author Mmotkim
  */
 class Order {
-    private String customerName;
+    
     ArrayList<Fruit> fruitList;
 
     public Order() {
     }
 
-    public Order(String customerName, ArrayList<Fruit> fruitList) {
-        this.customerName = customerName;
+    public Order(ArrayList<Fruit> fruitList) {
         this.fruitList = fruitList;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
     }
 
     public ArrayList<Fruit> getFruitList() {
@@ -37,6 +28,8 @@ class Order {
     public void setFruitList(ArrayList<Fruit> fruitList) {
         this.fruitList = fruitList;
     }
+
+    
     
     
 }

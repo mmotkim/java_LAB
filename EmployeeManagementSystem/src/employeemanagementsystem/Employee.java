@@ -10,7 +10,7 @@ import java.time.LocalDate;
  *
  * @author Mmotkim
  */
-class Employee {
+public class Employee implements Comparable<Employee> {
     private int id;
     private String firstName;
     private String lastName;
@@ -127,6 +127,13 @@ class Employee {
                 + "\t" + email + "\t" + address + "\t\t" + DOB + "\t" + sex 
                 + "\t\t" + salary + "\t\t" + agency);
     }
+
+    @Override
+    public int compareTo(Employee e) {
+        return this.getFullName().compareTo(e.getFullName());
+    }
+
+
 
     
     

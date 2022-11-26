@@ -129,7 +129,7 @@ class input {
 
     }
 
-    public static LocalDate getDate() {
+    public static LocalDate getDate(String prompt) {
         Scanner sc = new Scanner(System.in);
         String input;
         DateTimeFormatter VNTime = DateTimeFormatter.ofPattern("dd/MM/YYYY ");
@@ -137,7 +137,7 @@ class input {
         
         //date input loop
         do{
-            System.out.println("Enter date of birth (day/month/year) : ");            
+            System.out.println(prompt);            
             input = sc.nextLine();
             
             // checks if user input is empty
