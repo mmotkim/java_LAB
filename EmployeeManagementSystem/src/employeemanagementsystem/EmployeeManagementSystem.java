@@ -24,7 +24,7 @@ public class EmployeeManagementSystem {
             //2.1 Display menu
             Management.displayMenu();
             //2.2 Get user input on management choices
-            choice = input.getNumber("Choose an option: ", 0, 6);
+            choice = input.getNumber("Choose an option: ", 0, 7);
             //2.3 Perform management utilities
             switch(choice){
                 case 1:
@@ -44,7 +44,8 @@ public class EmployeeManagementSystem {
                     Management.sortEmployee(employeeList);
                     break;
             }
-        } while(choice < 5);
+        } while(choice < 6);
     }
+    
     
 }

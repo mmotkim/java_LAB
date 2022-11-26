@@ -5,6 +5,7 @@
 package employeemanagementsystem;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -117,6 +118,8 @@ public class Employee implements Comparable<Employee> {
     public void setAgency(String agency) {
         this.agency = agency;
     }
+
+    
     
     public String getFullName(){
         return firstName + " " + lastName;
@@ -124,13 +127,13 @@ public class Employee implements Comparable<Employee> {
 
     public void displayOne(){
         System.out.println(id + "\t" + getFullName() + "\t" + phone 
-                + "\t" + email + "\t" + address + "\t\t" + DOB + "\t" + sex 
+                + "\t" + email + "\t" + address + "\t" + DOB + "\t" + sex 
                 + "\t\t" + salary + "\t\t" + agency);
     }
 
     @Override
     public int compareTo(Employee e) {
-        return this.getFullName().compareTo(e.getFullName());
+        return Integer.compare(this.getSalary(), e.getSalary());
     }
 
 
