@@ -5,12 +5,13 @@
 package productmanagementsystem;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
  * @author Mmotkim
  */
-class Product {
+class Product implements Comparable<Product> {
     private int id;
     private String name;
     private String location;
@@ -108,8 +109,28 @@ class Product {
         this.receiptDate = receiptDate;
     }
     
-
+    public String getKeeperName(ArrayList<Keeper> keeperList, int keeperId){
+        for (Keeper keeper : keeperList) {
+            if(keeper.getId() == keeperId){
+                return keeper.getName();
+            }
+        }
+        return null;
+    }
     
+
+    public void displayOne(ArrayList<Keeper> keeperList){
+        System.out.println(id + "\t" + name + "\t" + location + "\t\t" + price + "\t" + expiryDate + "\t" + manufactureDate + "\t\t" + category + "\t\t" + getKeeperName(keeperList, keeperId) + "\t\t" + receiptDate);
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        int expiry = this.expiryDate.compareTo(o.getExpiryDate());
+        
+        if(expiry != 0)
+            return expiry;
+        else return this.manufactureDate.compareTo(o.getManufactureDate());
+    }
     
     
 }

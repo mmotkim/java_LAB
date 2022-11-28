@@ -38,10 +38,10 @@ public class ProductManagementSystem {
                     Management.updateProduct(productList, keeperList);
                     break;
                 case 4:
-                    Management.searchProduct(productList);
+                    Management.searchProduct(productList, keeperList);
                     break;
                 case 5:
-                    Management.sortProduct(productList);
+                    Management.sortProduct(productList, keeperList);
                     break;
             }
         } while (choice < 6);

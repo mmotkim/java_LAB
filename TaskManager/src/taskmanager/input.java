@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package productmanagementsystem;
+package taskmanager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -97,8 +97,8 @@ class input {
         } while (true);
 
     }
-
-    public static LocalDate getDate(String prompt, boolean checkNow) {
+    
+    public static String getDate(String prompt, boolean checkNow) {
         Scanner sc = new Scanner(System.in);
         String input;
         DateTimeFormatter VNTime = DateTimeFormatter.ofPattern(("dd/MM/yyyy"));
@@ -119,21 +119,62 @@ class input {
                 date = LocalDate.parse(input, VNTime);
                 
                 //checks if date inputted is valid in terms of age.
-                if(checkNow == true && date.compareTo(LocalDate.now()) >= 0){//date inputted is in the future or present
+                if(checkNow == true && date.compareTo(LocalDate.now()) < 0){//date inputted is in the future or present
                     throw new Exception();
                 }
             } catch (DateTimeParseException parseEx){
                 System.out.println("Wrong date format!");
                 continue;
             } catch (Exception ex){
-                System.out.println("Date inputted is invalid! try again.");
+                System.out.println("Schedule can't be in the past! try again.");
                 continue;
             }
             
             break;
         }while(true);
         
-        return date;
+        //format the date object into a string and return it
+        return VNTime.format(date);
+    }
+    
+    public static double getDouble(String prompt, double min, double max){
+        
+        // Declare variables and create objects
+        Scanner sc = new Scanner(System.in);
+        String input;
+        double number;
+
+        // User Input Loop for checking appropriate input format
+        do {
+            System.out.print(prompt);
+            input = sc.nextLine();
+
+            // checks if user input is empty
+            if (input.isEmpty()) {
+                System.out.println("Input can't be empty!");
+                continue;
+            }
+
+            try {
+                number = Double.parseDouble(input);
+
+                // Checks if number input is within accepted range
+                if (number < min || number > max) {
+                    throw new Exception();
+                }
+            } catch (NumberFormatException ex) { // checks if user inputted a string
+                System.out.println("Input can't be a string! ");
+                continue;
+
+            } catch (Exception OutOfRange) {
+                System.out.println("Input must be in range!");
+                continue;
+
+            }
+            break;
+        } while (true);
+
+        return number;
     }
     
 }
