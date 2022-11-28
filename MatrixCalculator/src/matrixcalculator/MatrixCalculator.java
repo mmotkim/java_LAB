@@ -98,31 +98,27 @@ public class MatrixCalculator {
     }
     
     public static void multiplicationMatrix(int[][] matrix1, int[][]matrix2){
-
+        
+        
         //Prints out calculation properties
         display.displayOne(matrix1);
         System.out.print("-\n");
         display.displayOne(matrix2);
         System.out.print("=\n");
         
-        //Declare necessary variables 
+        //Declare necessary variables
         int rowLength = matrix1.length;
         int colLength = matrix1[0].length;
         int sum[][] = new int[rowLength][colLength];
         
-        
-
         //Double loop to add matrix, access every value 
         for(int r=0; r < rowLength; r++){//Access rows
             
             for(int c=0; c < colLength; c++){//Access columns
                 
                 sum[r][c] = matrix1[r][c] - matrix2[r][c]; //Perform subtraction on each matrix value at their precise positions accordingly
-
             }
         }
-
-
         
         //Display result of the subtraction
         System.out.println("-------- Result --------");
